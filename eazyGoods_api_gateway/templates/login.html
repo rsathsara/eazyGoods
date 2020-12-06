@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+
+  <head>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    
+
+    <title>MaxERP - WebPortal</title>
+
+    <!-- Bootstrap core CSS-->
+    <link href="vendorCss/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Custom fonts for this template-->
+    <link href="vendorCss/all.min.css" rel="stylesheet" type="text/css">
+
+    <!-- Custom styles for this template-->
+    <link href="vendorCss/sb-admin.css" rel="stylesheet">
+    <link rel="stylesheet" href="vendorCss/sweetalert2.css">
+
+  </head>
+
+  <body class="bg-secondary">
+
+    <div class="container">
+      <div class="card card-login mx-auto mt-5">
+        <div class="card-header">Login</div>
+        <div class="card-body">
+         <form method="post" action="">
+            <div class="form-group">
+              <div class="form-label-group">
+                <input type="text" id="inputUsername" name="username" class="form-control" placeholder="Username"  required="required" autofocus="autofocus">
+                <label for="inputUsername">Username</label>
+              </div>
+            </div>
+            <div class="form-group">
+              <div class="form-label-group">
+                <input type="password" id="inputPassword" name="password" class="form-control" placeholder="Password" required="required">
+                <label for="inputPassword">Password</label>
+              </div>
+            </div>
+           
+            <button type="button" id="loginSubmit" class="btn btn-primary btn-block">Submit</button>
+         </form>
+          
+        </div>
+      </div>
+    </div>
+
+    <!-- Bootstrap core JavaScript-->
+    <script src="vendorJs/jquery.3.2.1.min.js"></script>
+    <script src="vendorJs/bootstrap.bundle.min.js"></script>
+
+    <!-- Core plugin JavaScript-->
+    <script src="vendorJs/jquery.easing.min.js"></script>
+    <script src="vendorJs/sweetalert2.all.min.js"></script>
+
+    <!-- Custom JS -->
+    <script src="js/alert_handler.js"></script>
+    <script src="js/request_handler.js"></script>
+
+  </body>
+
+</html>
+<script>
+  $(document).ready(function () {
+
+    //Submit login
+    $('#loginSubmit').click(function () {
+      loginData = {username: $('#inputUsername').val(), password: $('#inputPassword').val()};
+      login = request_handler({url: "/login", method: "POST" , data: loginData});
+      if (login == true){
+        location.href = '/homePage';
+      } else{
+
+      }
+    });
+
+  });
+</script>
