@@ -34,8 +34,9 @@ func requestHandler() {
 	router.HandleFunc("/grnFormPage", grnFormPage)
 	router.HandleFunc("/logout", logout)
 	router.HandleFunc("/login", login).Methods("POST")
-	router.PathPrefix("/").Handler(http.FileServer(rice.MustFindBox("assets").HTTPBox()))
-	router.PathPrefix("/templates/").Handler(http.StripPrefix("/templates/", http.FileServer(http.Dir(dir))))
+	// router.PathPrefix("/").Handler(http.FileServer(rice.MustFindBox("assets").HTTPBox()))
+	router.PathPrefix("/").Handler(http.FileServer(rice.MustFindBox("static_files").HTTPBox()))
+	router.PathPrefix("/static_files/templates/").Handler(http.StripPrefix("/static_files/templates/", http.FileServer(http.Dir(dir))))
 
 	port := os.Getenv("HTTP_PLATFORM_PORT")
 	if port == "" {
