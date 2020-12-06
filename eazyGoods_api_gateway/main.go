@@ -22,10 +22,10 @@ func main() {
 }
 
 func requestHandler() {
-	var dir string
+	// var dir string
 	router := mux.NewRouter()
 
-	router.HandleFunc("/", homePage)
+	router.HandleFunc("/", redirectToHomePage)
 	router.HandleFunc("/homePage", homePage)
 	router.HandleFunc("/loginPage", loginPage)
 	router.HandleFunc("/billingListPage", billingListPage)
@@ -34,9 +34,8 @@ func requestHandler() {
 	router.HandleFunc("/grnFormPage", grnFormPage)
 	router.HandleFunc("/logout", logout)
 	router.HandleFunc("/login", login).Methods("POST")
-	// router.PathPrefix("/").Handler(http.FileServer(rice.MustFindBox("assets").HTTPBox()))
+	// router.PathPrefix("/assets/").Handler(http.StripPrefix("/assets/", http.FileServer(http.Dir(dir+"static_files/assets"))))
 	router.PathPrefix("/").Handler(http.FileServer(rice.MustFindBox("static_files").HTTPBox()))
-	router.PathPrefix("/static_files/templates/").Handler(http.StripPrefix("/static_files/templates/", http.FileServer(http.Dir(dir))))
 
 	port := os.Getenv("HTTP_PLATFORM_PORT")
 	if port == "" {
