@@ -60,3 +60,10 @@ function ajaxErrorAlert(error){
 		showDetailError(error.responseText);
 	});
 }
+
+//Show server detail error on a new page after an ajx error
+function showDetailError(errorDetail){
+    var x=window.open();
+    x.document.open();
+    x.document.write(errorDetail);
+}

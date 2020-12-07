@@ -5,21 +5,8 @@ import (
 	"net/http"
 )
 
-type service struct {
-	ID   int
-	Name string
-	URL  string
-}
-
-type respone struct {
-}
-
-var services []service
-
-func serviceHandler() {
-	services = []service{
-		service{ID: 1, Name: "main_service", URL: "https://localhost:8834/"},
-	}
+func mainService(w http.ResponseWriter, r *http.Request) {
+	logout(w, r)
 }
 
 func logout(w http.ResponseWriter, r *http.Request) {

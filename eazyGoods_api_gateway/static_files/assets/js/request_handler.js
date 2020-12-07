@@ -19,6 +19,8 @@ function request_handler(request) {
 //Views
 $(".viewProfile").click(function () { $("#pageContentLoader").load("/userProfile") });
 $(".viewChangePswd").click(function () { $("#pageContentLoader").load("/changePassword") });
-$(".viewGrnList").click(function () { $("#pageContentLoader").load("/grnListPage") });
-$(".viewBillingList").click(function () { $("#pageContentLoader").load("/billingListPage") });
+$(".viewGrnForm").click(function () { $("#pageContentLoader").load("/grnFormPage") });
+$(".viewBillingForm").click(function () { $("#pageContentLoader").load("/billingFormPage") });
+
+
 

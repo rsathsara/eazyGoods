@@ -8,6 +8,7 @@ import (
 )
 
 func loginPage(w http.ResponseWriter, r *http.Request) {
+	// use this code when serving template without rice box
 	// t, _ := template.ParseFiles("static_files/templates/login.html")
 	// t.Execute(w, nil)
 	box, _ := rice.FindBox("static_files/templates")
@@ -28,38 +29,12 @@ func homePage(w http.ResponseWriter, r *http.Request) {
 	tmplMessage.Execute(w, nil)
 }
 
-func billingListPage(w http.ResponseWriter, r *http.Request) {
-	if sessionResponse := sessionCheck(w, r); !sessionResponse {
-		redirectToLoginPage(w, r)
-	}
-	// t, _ := template.ParseFiles("static_files/templates/billingList.html")
-	// t.Execute(w, nil)
-	box, _ := rice.FindBox("static_files/templates")
-	t, _ := box.String("billingList.html")
-	tmplMessage, _ := template.New("message").Parse(t)
-	tmplMessage.Execute(w, nil)
-}
-
 func billingFormPage(w http.ResponseWriter, r *http.Request) {
 	if sessionResponse := sessionCheck(w, r); !sessionResponse {
 		redirectToLoginPage(w, r)
 	}
-	// t, _ := template.ParseFiles("static_files/templates/billingForm.html")
-	// t.Execute(w, nil)
 	box, _ := rice.FindBox("static_files/templates")
 	t, _ := box.String("billingForm.html")
-	tmplMessage, _ := template.New("message").Parse(t)
-	tmplMessage.Execute(w, nil)
-}
-
-func grnListPage(w http.ResponseWriter, r *http.Request) {
-	if sessionResponse := sessionCheck(w, r); !sessionResponse {
-		redirectToLoginPage(w, r)
-	}
-	// t, _ := template.ParseFiles("static_files/templates/grnList.html")
-	// t.Execute(w, nil)
-	box, _ := rice.FindBox("static_files/templates")
-	t, _ := box.String("grnList.html")
 	tmplMessage, _ := template.New("message").Parse(t)
 	tmplMessage.Execute(w, nil)
 }
@@ -68,8 +43,6 @@ func grnFormPage(w http.ResponseWriter, r *http.Request) {
 	if sessionResponse := sessionCheck(w, r); !sessionResponse {
 		redirectToLoginPage(w, r)
 	}
-	// t, _ := template.ParseFiles("static_files/templates/grnForm.html")
-	// t.Execute(w, nil)
 	box, _ := rice.FindBox("static_files/templates")
 	t, _ := box.String("grnForm.html")
 	tmplMessage, _ := template.New("message").Parse(t)

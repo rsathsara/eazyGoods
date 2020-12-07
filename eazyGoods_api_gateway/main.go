@@ -24,13 +24,13 @@ func main() {
 func requestHandler() {
 	// var dir string
 	router := mux.NewRouter()
+	mainServiceRouter := router.PathPrefix("/eazyGoods_api/main_service/").Subrouter()
+	mainServiceRouter.HandleFunc("/", mainService)
 
 	router.HandleFunc("/", redirectToHomePage)
 	router.HandleFunc("/homePage", homePage)
 	router.HandleFunc("/loginPage", loginPage)
-	router.HandleFunc("/billingListPage", billingListPage)
 	router.HandleFunc("/billingFormPage", billingFormPage)
-	router.HandleFunc("/grnListPage", grnListPage)
 	router.HandleFunc("/grnFormPage", grnFormPage)
 	router.HandleFunc("/logout", logout)
 	router.HandleFunc("/login", login).Methods("POST")
@@ -39,7 +39,7 @@ func requestHandler() {
 
 	port := os.Getenv("HTTP_PLATFORM_PORT")
 	if port == "" {
-		port = "8181"
+		port = "3240"
 	}
 	fmt.Println("Running On Port:", port)
 	log.Fatal(http.ListenAndServe(":"+port, router))

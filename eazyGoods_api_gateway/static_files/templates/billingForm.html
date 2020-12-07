@@ -1,0 +1,202 @@
+<div class="content">
+    <div class="page-inner">
+        <div class="page-header">
+            <h4 class="page-title">Billing Form</h4>
+            <ul class="breadcrumbs">
+                <li class="nav-home">
+                    <a href="">
+                        <i class="flaticon-home"></i>
+                    </a>
+                </li>
+                <li class="separator">
+                    <i class="flaticon-right-arrow"></i>
+                </li>
+                <li class="nav-item">
+                    <a href="#">Sales</a>
+                </li>
+            </ul>
+        </div>
+
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="card-header" style="padding: 0.5rem 1.25rem;">
+                        <div class="row">
+                            <div class="col-md-12 formRowInput">
+                                <div
+                                    style="float: right;padding-bottom: 0px;padding-top: 0px;padding-left: 10px;padding-right: 10px;">
+                                    <button type="button" class="btn btn-primary" id="newBill"
+                                        style="padding: 3px 15px;font-size: 1rem;">
+                                        <span class="btn-label">
+                                            <i class="fa fa-plus"></i>
+                                        </span> New</button>
+                                    <button type="button" class="btn btn-success" id="saveBill"
+                                        style="padding: 3px 15px;font-size: 1rem;">
+                                        <span class="btn-label">
+                                            <i class="fa fa-save"></i>
+                                        </span> Save</button>
+                                    <button type="button" class="btn btn-success" id="editBill"
+                                        style="padding: 3px 15px;font-size: 1rem;">
+                                        <span class="btn-label">
+                                            <i class="far fa-edit"></i>
+                                        </span> Edit</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <form id="billingForm">
+                            <div style="border-bottom: 1px solid #b4b7b6;font-size: 1.25rem;
+                                font-weight: bold;padding: 5px;">General</div>
+                            <div class="row" style="padding-left: 5px;padding-right: 5px;">
+                                <div class="col-md-2 formRowInput">
+                                    <div class="form-group">
+                                        <label>Bill Date</label>
+                                        <div class="input-group">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text"
+                                                    style="border-color: #6861ce !important;">
+                                                    <i class="fa fa-calendar"></i>
+                                                </span>
+                                            </div>
+                                            <input type="text" name="docDate" id="date" class="form-control"
+                                                style="border-right-color: #bcbec6;">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-2 formRowInput">
+                                    <div class="form-group">
+                                        <label>Bill No.</label>
+                                        <input name="docNo" type="text" class="form-control form-control">
+                                    </div>
+                                </div>
+                                <div class="col-md-8 formRowInput">
+                                    <div class="form-group">
+                                        <label>Bill To</label>
+                                        <input name="billTo" type="text" class="form-control form-control">
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div style="border-bottom: 1px solid #b4b7b6;font-size: 1.25rem;
+                                font-weight: bold;padding: 5px;">Item List</div>
+                            <div class="row" style="padding-left: 15px;padding-right: 15px;padding-top: 5px;">
+                                <div class="col-md-12 formRowInput">
+                                    <button type="button" style="padding: 3px 15px;font-size: 1rem;" class="btn btn-primary" id="openAddItemModal">
+                                        <span class="btn-label">
+                                            <i class="fa fa-plus"></i>
+                                        </span> Add Items</button>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-12 formRowInput">
+                                    <div class="table-responsive">
+                                        <table id="billItemTable" class="display table-striped table-hover dataTable"
+                                            width="100%">
+
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<!-- add item Modal -->
+<div class="modal fade" id="addItemModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle"
+    aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" style="max-width: 35rem" role="document">
+        <div class="modal-content">
+            <div class="modal-header" style="background-color: #16629e;">
+                <div class="heading lead" style="color: #fff;">Add Items</div>
+
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true" class="white-text" style="color: #eaeaea;">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-md-12 formRowInput">
+                        <div class="form-group">
+                            <label>Item Description</label>
+                            <input name="itemDes" type="text" class="form-control form-control">
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-4 formRowInput">
+                        <div class="form-group">
+                            <label>Code</label>
+                            <input name="itemCode" type="text" class="form-control form-control" readonly>
+                        </div>
+                    </div>
+                    <div class="col-md-4 formRowInput">
+                        <div class="form-group">
+                            <label>Unit</label>
+                            <input name="itemUnit" type="text" class="form-control form-control" readonly>
+                        </div>
+                    </div>
+                    <div class="col-md-4 formRowInput">
+                        <div class="form-group">
+                            <label>SOH</label>
+                            <input name="itemSOH" type="text" class="form-control form-control" readonly>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-4 formRowInput">
+                        <div class="form-group">
+                            <label>Qty</label>
+                            <input name="itemQty" type="text" class="form-control form-control">
+                        </div>
+                    </div>
+                    <div class="col-md-4 formRowInput">
+                        <div class="form-group">
+                            <label>Price</label>
+                            <input name="itemPrice" type="text" class="form-control form-control">
+                        </div>
+                    </div>
+                    <div class="col-md-4 formRowInput">
+                        <div class="form-group">
+                            <label>Value</label>
+                            <input name="itemValue" type="text" class="form-control form-control" readonly>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    
+                </div>
+            </div>
+            <div class="modal-footer" style="background-color:#16629e; padding:0.5rem; border-radius:0;">
+            </div>
+
+        </div>
+    </div>
+</div>
+<!-- add item Modal End -->
+<footer class="footer">
+    <div class="container-fluid">
+        <div class="copyright ml-auto">
+            <span>Copyright © Max-A Solutions 2019</span>
+        </div>
+    </div>
+</footer>
+<script>
+    $(document).ready(function () {
+        //Open add item modal
+        $('#openAddItemModal').on('click', function () {
+            $('#addItemModal').modal('show');
+        });
+
+        
+    });
+    function populateBillingForm(data){
+
+    }
+    
+</script>

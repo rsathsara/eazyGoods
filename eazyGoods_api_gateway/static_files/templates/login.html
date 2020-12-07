@@ -70,7 +70,7 @@
     //Submit login
     $('#loginSubmit').click(function () {
       loginData = {username: $('#inputUsername').val(), password: $('#inputPassword').val()};
-      login = request_handler({url: "/login", method: "POST" , data: loginData});
+      login = request_handler({url: "login", method: "POST" , data: loginData});
       if (login == true){
         location.href = '/homePage';
       } else{
