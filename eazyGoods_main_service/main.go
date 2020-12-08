@@ -17,6 +17,8 @@ var (
 )
 
 func main() {
+	// Clear memory
+	modal.Data = nil
 	requestHandler()
 }
 
@@ -24,6 +26,16 @@ func requestHandler() {
 	router := mux.NewRouter()
 
 	router.HandleFunc("/", defaultFunction)
+	// Billing
+	router.HandleFunc("/api/bills", getBills).Methods("GET")
+	router.HandleFunc("/api/bills/{id}", getBill).Methods("GET")
+	router.HandleFunc("/api/bills", createBill).Methods("POST")
+	router.HandleFunc("/api/bills/{id}/{action}", updatetBill).Methods("PUT")
+	// GRN
+	router.HandleFunc("/api/grns", getGrns).Methods("GET")
+	router.HandleFunc("/api/grns/{id}", getGrn).Methods("GET")
+	router.HandleFunc("/api/grns", createGrn).Methods("POST")
+	router.HandleFunc("/api/grns/{id}", updatetGrn).Methods("PUT")
 
 	port := os.Getenv("HTTP_PLATFORM_PORT")
 	if port == "" {

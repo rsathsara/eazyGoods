@@ -67,13 +67,18 @@
                                 <div class="col-md-2 formRowInput">
                                     <div class="form-group">
                                         <label>Bill No.</label>
-                                        <input name="docNo" type="text" class="form-control form-control">
+                                        <input name="docNo" type="text" class="form-control">
                                     </div>
                                 </div>
                                 <div class="col-md-8 formRowInput">
                                     <div class="form-group">
-                                        <label>Bill To</label>
-                                        <input name="billTo" type="text" class="form-control form-control">
+                                        <label for="billTo">Bill To</label>
+                                        <select class="form-control searchable-dropdown" name="billTo" id="billTo" 
+                                        style="padding: .6rem 1rem !important;border-color: #6861ce !important;height: inherit !important;">
+                                            <option selected="selected">orange</option>
+                                            <option>white</option>
+                                            <option>purple</option>
+                                        </select>
                                     </div>
                                 </div>
                             </div>
@@ -95,6 +100,32 @@
                                             width="100%">
 
                                         </table>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-3 formRowInput">
+                                    <div class="form-group">
+                                        <label>Bill Total</label>
+                                        <input name="billTotal" type="text" class="form-control" readonly>
+                                    </div>
+                                </div>
+                                <div class="col-md-3 formRowInput">
+                                    <div class="form-group">
+                                        <label>Cash</label>
+                                        <input name="cash" type="text" class="form-control">
+                                    </div>
+                                </div>
+                                <div class="col-md-3 formRowInput">
+                                    <div class="form-group">
+                                        <label>C/C</label>
+                                        <input name="creditCard" type="text" class="form-control">
+                                    </div>
+                                </div>
+                                <div class="col-md-3 formRowInput">
+                                    <div class="form-group">
+                                        <label>Balance</label>
+                                        <input name="balance" type="text" class="form-control" readonly>
                                     </div>
                                 </div>
                             </div>
@@ -123,8 +154,12 @@
                 <div class="row">
                     <div class="col-md-12 formRowInput">
                         <div class="form-group">
-                            <label>Item Description</label>
-                            <input name="itemDes" type="text" class="form-control form-control">
+                            <label for="item">Bill To</label>
+                            <select class="form-control searchable-dropdown" id="item" name="billTo"  style="padding: .6rem 1rem !important;border-color: #6861ce !important;height: inherit !important;">
+                                <option selected="selected">orange</option>
+                                <option>white</option>
+                                <option>purple</option>
+                            </select>
                         </div>
                     </div>
                 </div>
@@ -132,19 +167,19 @@
                     <div class="col-md-4 formRowInput">
                         <div class="form-group">
                             <label>Code</label>
-                            <input name="itemCode" type="text" class="form-control form-control" readonly>
+                            <input name="itemCode" type="text" class="form-control" readonly>
                         </div>
                     </div>
                     <div class="col-md-4 formRowInput">
                         <div class="form-group">
                             <label>Unit</label>
-                            <input name="itemUnit" type="text" class="form-control form-control" readonly>
+                            <input name="itemUnit" type="text" class="form-control" readonly>
                         </div>
                     </div>
                     <div class="col-md-4 formRowInput">
                         <div class="form-group">
                             <label>SOH</label>
-                            <input name="itemSOH" type="text" class="form-control form-control" readonly>
+                            <input name="itemSOH" type="text" class="form-control" readonly>
                         </div>
                     </div>
                 </div>
@@ -152,24 +187,34 @@
                     <div class="col-md-4 formRowInput">
                         <div class="form-group">
                             <label>Qty</label>
-                            <input name="itemQty" type="text" class="form-control form-control">
+                            <input name="itemQty" type="text" class="form-control">
                         </div>
                     </div>
                     <div class="col-md-4 formRowInput">
                         <div class="form-group">
                             <label>Price</label>
-                            <input name="itemPrice" type="text" class="form-control form-control">
+                            <input name="itemPrice" type="text" class="form-control">
                         </div>
                     </div>
                     <div class="col-md-4 formRowInput">
                         <div class="form-group">
                             <label>Value</label>
-                            <input name="itemValue" type="text" class="form-control form-control" readonly>
+                            <input name="itemValue" type="text" class="form-control" readonly>
                         </div>
                     </div>
                 </div>
                 <div class="row">
-                    
+                    <div class="col-md-12 formRowInput">
+                        <div
+                            style="float: right;padding-bottom: 0px;padding-top: 0px;padding-left: 10px;padding-right: 10px;">
+                            <button type="button" class="btn btn-danger" id="clearItem"
+                                style="padding: 3px 15px;font-size: 1rem;">
+                                New</button>
+                            <button type="button" class="btn btn-success" id="addItem"
+                                style="padding: 3px 15px;font-size: 1rem;">
+                                Add</button>
+                        </div>
+                    </dIV>
                 </div>
             </div>
             <div class="modal-footer" style="background-color:#16629e; padding:0.5rem; border-radius:0;">
@@ -188,15 +233,62 @@
 </footer>
 <script>
     $(document).ready(function () {
-        //Open add item modal
+        billItemTable([]);
+
+        //
+        $('.searchable-dropdown').select2({
+            tags: true
+        });
+        //Date picker function
+
+        //Get bill no
+
+        //Add Item -> Open modal
         $('#openAddItemModal').on('click', function () {
             $('#addItemModal').modal('show');
         });
 
-        
+        //Add Item -> Add item
+
+        //Add Item -> Clear form
+
+        //Save Bill
+
+        //Load Bill details
+
+        //Edit Bill
+
+        //New Bill
+
     });
     function populateBillingForm(data){
 
+    }
+
+    function billItemTable(data){
+        var table = '<thead><tr>'+
+            '<th style="display:none;">id</th>'+
+            '<th>Item Code</th>'+
+            '<th>Item Description</th>'+
+            '<th>Unit</th>'+
+            '<th>Qty</th>'+
+            '<th>Unit Price</th>'+
+            '<th>Value</th>'+
+            '</tr></thead><tbody>';
+        for (var i in data) {
+            table += '<tr>'+
+                '<td style="display:none;">'+ data[i].date +
+                '</td><td>'+ data[i].time +
+                '</td><td>'+ data[i].qty +
+                '</td><td>'+ data[i].qty +
+                '</td><td>'+ data[i].qty +
+                '</td><td>'+ data[i].qty +
+                '</td><td>'+ data[i].qty +
+                '</td></tr>';
+        }
+        table += '</tbody>';
+        $("#billItemTable").html(table);
+        $("#billItemTable").DataTable({ "dom": 'lrtip', "lengthChange": false, "aaSorting": [], pageLength: 5,"destroy": true });
     }
     
 </script>

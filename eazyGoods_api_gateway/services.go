@@ -2,45 +2,27 @@ package main
 
 import (
 	"encoding/json"
+	"io/ioutil"
 	"net/http"
 )
 
 func mainService(w http.ResponseWriter, r *http.Request) {
-	logout(w, r)
-}
-
-func logout(w http.ResponseWriter, r *http.Request) {
-	session, _ := store.Get(r, "cookie-name")
-	// Revoke users authentication
-	session.Values["authenticated"] = false
-	session.Save(r, w)
-
-	http.Redirect(w, r, "/loginPage", 302)
-	return
-}
-
-func login(w http.ResponseWriter, r *http.Request) {
-	r.ParseForm()
-
-	uname := r.FormValue("username") // Data from the form
-	// pwd := r.FormValue("password")   // Data from the form
-
-	session, _ := store.Get(r, "cookie-name")
-
-	session.Values["authenticated"] = true
-	session.Values["username"] = uname
-	session.Save(r, w)
-
 	w.Header().Set("Content-Type", "application/json; charset=utf-8")
-	result, _ := json.Marshal(true)
-	w.Write(result)
+	response, err := http.Get("http://localhost:3250/api/bills")
+	if err != nil {
+		result, _ := json.Marshal(err.Error())
+		w.Write(result)
+		return
+	}
+	responseBody, err := ioutil.ReadAll(response.Body)
+	if err != nil {
+		result, _ := json.Marshal(err.Error())
+		w.Write(result)
+		return
+	}
+	w.Write(responseBody)
 }
 
-func sessionCheck(w http.ResponseWriter, r *http.Request) bool {
-	session, _ := store.Get(r, "cookie-name")
-	// Check if user is authenticated
-	if auth, ok := session.Values["authenticated"].(bool); !ok || !auth {
-		return false
-	}
-	return true
+func apiResposeHandler() {
+
 }
