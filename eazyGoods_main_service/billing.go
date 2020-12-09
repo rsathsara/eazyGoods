@@ -31,6 +31,6 @@ func createBill(w http.ResponseWriter, r *http.Request) {
 }
 
 // Update Bill
-func updatetBill(w http.ResponseWriter, r *http.Request) {
+func updateBill(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "application/json; charset=utf-8")
 }

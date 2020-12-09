@@ -8,9 +8,6 @@ import (
 )
 
 func loginPage(w http.ResponseWriter, r *http.Request) {
-	// use this code when serving template without rice box
-	// t, _ := template.ParseFiles("static_files/templates/login.html")
-	// t.Execute(w, nil)
 	box, _ := rice.FindBox("static_files/templates")
 	t, _ := box.String("login.html")
 	tmplMessage, _ := template.New("message").Parse(t)
@@ -21,8 +18,6 @@ func homePage(w http.ResponseWriter, r *http.Request) {
 	if sessionResponse := sessionCheck(w, r); !sessionResponse {
 		redirectToLoginPage(w, r)
 	}
-	// t, _ := template.ParseFiles("static_files/templates/main.html")
-	// t.Execute(w, nil)
 	box, _ := rice.FindBox("static_files/templates")
 	t, _ := box.String("main.html")
 	tmplMessage, _ := template.New("message").Parse(t)

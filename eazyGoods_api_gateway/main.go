@@ -18,15 +18,13 @@ var (
 )
 
 func main() {
+	modal.Data = nil
 	requestHandler()
 }
 
 func requestHandler() {
-	// var dir string
 	router := mux.NewRouter()
-	mainServiceRouter := router.PathPrefix("/eazyGoods_api/main_service/").Subrouter()
-	mainServiceRouter.HandleFunc("/", mainService)
-
+	router.PathPrefix("/eazyGoods_api/").Handler(http.HandlerFunc(apiHandler))
 	router.HandleFunc("/", redirectToHomePage)
 	router.HandleFunc("/homePage", homePage)
 	router.HandleFunc("/loginPage", loginPage)
@@ -34,7 +32,6 @@ func requestHandler() {
 	router.HandleFunc("/grnFormPage", grnFormPage)
 	router.HandleFunc("/logout", logout)
 	router.HandleFunc("/login", login).Methods("POST")
-	// router.PathPrefix("/assets/").Handler(http.StripPrefix("/assets/", http.FileServer(http.Dir(dir+"static_files/assets"))))
 	router.PathPrefix("/").Handler(http.FileServer(rice.MustFindBox("static_files").HTTPBox()))
 
 	port := os.Getenv("HTTP_PLATFORM_PORT")

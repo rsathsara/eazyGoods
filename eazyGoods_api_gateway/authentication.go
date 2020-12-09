@@ -11,7 +11,7 @@ func logout(w http.ResponseWriter, r *http.Request) {
 	session.Values["authenticated"] = false
 	session.Save(r, w)
 
-	http.Redirect(w, r, "/loginPage", 200)
+	http.Redirect(w, r, "/loginPage", 302)
 	return
 }
 

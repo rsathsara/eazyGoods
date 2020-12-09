@@ -5,6 +5,8 @@ type Modal struct {
 	Data []Data
 }
 
+var modal = Modal{}
+
 //Data struct
 type Data struct {
 	Bill        []Bill
@@ -46,5 +48,3 @@ type ResponseMsg struct {
 	Status []string `json:"status"`
 	Msg    []string `json:"msg"`
 }
-
-var modal = Modal{}
