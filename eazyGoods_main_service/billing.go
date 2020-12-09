@@ -2,6 +2,7 @@ package main
 
 import (
 	"encoding/json"
+	"io/ioutil"
 	"net/http"
 )
 
@@ -28,6 +29,8 @@ func getBill(w http.ResponseWriter, r *http.Request) {
 // Create a New Bill
 func createBill(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "application/json; charset=utf-8")
+	body, _ := ioutil.ReadAll(r.Body)
+	json.NewEncoder(w).Encode(body)
 }
 
 // Update Bill
