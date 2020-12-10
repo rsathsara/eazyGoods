@@ -7,10 +7,16 @@ function request_handler(request) {
         dataType: "json",
         data: request.data,
         success: function (data) {
-            response = data;
+            if (data.status != 200){
+                response = {status: false, body: ""};
+                ajaxErrorAlert(data.body);
+            } else{
+                response = {status: true, body: data.body};
+            }
         },
         error: function(error){
             ajaxErrorAlert(error);
+            response = {status: false, body: ""};
         }
     });
     return response;

@@ -71,10 +71,10 @@
     $('#loginSubmit').click(function () {
       loginData = {username: $('#inputUsername').val(), password: $('#inputPassword').val()};
       login = request_handler({url: "login", method: "POST" , data: loginData});
-      if (login == true){
+      if (login.status == true && login.body == "true"){
         location.href = '/homePage';
       } else{
-
+        location.href = '';
       }
     });
 

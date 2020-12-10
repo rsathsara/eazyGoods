@@ -5,8 +5,6 @@ type Modal struct {
 	Data []Data
 }
 
-var modal = Modal{}
-
 //Data struct
 type Data struct {
 	Bill        []Bill

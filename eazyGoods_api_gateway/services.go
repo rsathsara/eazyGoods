@@ -9,39 +9,13 @@ import (
 	"strings"
 )
 
-// Modal Struct
-type Modal struct {
-	Data []Data
-}
-
-// Data Struct
-type Data struct {
-	APIResponse []APIResponse
-}
-
-// APIResponse Struct
-type APIResponse struct {
-	Status int    `json:"status"`
-	Body   string `json:"body"`
-}
-
-// Services Struct
-type Services struct {
-	ID   int
-	Name string
-	URL  string
-}
-
-var modal = Modal{}
-var apiResponse = APIResponse{}
-var services = []Services{
-	Services{ID: 1, Name: "main", URL: "http://localhost:3250/api/"},
-}
-
-func apiHandler(w http.ResponseWriter, r *http.Request) {
+func (api *API) apiHandler(w http.ResponseWriter, r *http.Request) {
+	if sessionResponse := sessionCheck(w, r); !sessionResponse {
+		redirectToLoginPage(w, r)
+	}
 	w.Header().Set("Content-Type", "application/json; charset=utf-8")
 	var result []byte
-	URL := getURL(r.URL.Path)
+	URL := getURL(r.URL.Path, api.Name)
 	body, _ := ioutil.ReadAll(r.Body)
 	if len(URL) > 0 {
 		switch r.Method {
@@ -84,17 +58,17 @@ func apiHandler(w http.ResponseWriter, r *http.Request) {
 	w.Write(result)
 }
 
-func getURL(urlPath string) string {
+func getURL(urlPath string, apiName string) string {
 	urlPart := strings.Split(urlPath, "/")
 	var serviceURL string
 	for _, v := range services {
-		if v.Name == urlPart[2] {
+		if v.APIName == apiName && v.Name == urlPart[2] {
 			serviceURL = v.URL
 			break
 		}
 	}
 	if len(serviceURL) > 0 {
-		serviceRequest := url.PathEscape(strings.TrimLeft(urlPath, "/eazyGoods_api/"+urlPart[2]+"/"))
+		serviceRequest := url.PathEscape(strings.TrimLeft(urlPath, apiName+urlPart[2]+"/"))
 		return serviceURL + serviceRequest
 	}
 	return ""

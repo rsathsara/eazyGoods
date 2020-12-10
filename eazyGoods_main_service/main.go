@@ -16,6 +16,8 @@ var (
 	store = sessions.NewCookieStore(key)
 )
 
+var modal = Modal{}
+
 func main() {
 	// Clear memory
 	modal.Data = nil
@@ -30,7 +32,7 @@ func requestHandler() {
 	router.HandleFunc("/api/bills", getBills).Methods("GET")
 	router.HandleFunc("/api/bills/{id}", getBill).Methods("GET")
 	router.HandleFunc("/api/bills", createBill).Methods("POST")
-	router.HandleFunc("/api/bills/{id}/{action}", updateBill).Methods("PUT")
+	router.HandleFunc("/api/bills/{id}", updateBill).Methods("PUT")
 	// GRN
 	router.HandleFunc("/api/grns", getGrns).Methods("GET")
 	router.HandleFunc("/api/grns/{id}", getGrn).Methods("GET")

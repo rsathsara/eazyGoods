@@ -28,7 +28,9 @@ func login(w http.ResponseWriter, r *http.Request) {
 	session.Save(r, w)
 
 	w.Header().Set("Content-Type", "application/json; charset=utf-8")
-	result, _ := json.Marshal(true)
+	apiResponse.Status = 200
+	apiResponse.Body = "true"
+	result, _ := json.Marshal(apiResponse)
 	w.Write(result)
 }
 

@@ -8,6 +8,9 @@ import (
 )
 
 func loginPage(w http.ResponseWriter, r *http.Request) {
+	if sessionResponse := sessionCheck(w, r); sessionResponse {
+		redirectToHomePage(w, r)
+	}
 	box, _ := rice.FindBox("static_files/templates")
 	t, _ := box.String("login.html")
 	tmplMessage, _ := template.New("message").Parse(t)

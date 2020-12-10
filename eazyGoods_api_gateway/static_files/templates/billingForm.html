@@ -73,8 +73,8 @@
                                 <div class="col-md-8 formRowInput">
                                     <div class="form-group">
                                         <label for="billTo">Bill To</label>
-                                        <select class="form-control searchable-dropdown" name="billTo" id="billTo" 
-                                        style="padding: .6rem 1rem !important;border-color: #6861ce !important;height: inherit !important;">
+                                        <select class="form-control searchable-dropdown" name="billTo" id="billTo"
+                                            style="padding: .6rem 1rem !important;border-color: #6861ce !important;height: inherit !important;">
                                             <option selected="selected">orange</option>
                                             <option>white</option>
                                             <option>purple</option>
@@ -82,12 +82,13 @@
                                     </div>
                                 </div>
                             </div>
-                            
+
                             <div style="border-bottom: 1px solid #b4b7b6;font-size: 1.25rem;
                                 font-weight: bold;padding: 5px;">Item List</div>
                             <div class="row" style="padding-left: 15px;padding-right: 15px;padding-top: 5px;">
                                 <div class="col-md-12 formRowInput">
-                                    <button type="button" style="padding: 3px 15px;font-size: 1rem;" class="btn btn-primary" id="openAddItemModal">
+                                    <button type="button" style="padding: 3px 15px;font-size: 1rem;"
+                                        class="btn btn-primary" id="openAddItemModal">
                                         <span class="btn-label">
                                             <i class="fa fa-plus"></i>
                                         </span> Add Items</button>
@@ -155,7 +156,8 @@
                     <div class="col-md-12 formRowInput">
                         <div class="form-group">
                             <label for="item">Bill To</label>
-                            <select class="form-control searchable-dropdown" id="item" name="billTo"  style="padding: .6rem 1rem !important;border-color: #6861ce !important;height: inherit !important;">
+                            <select class="form-control searchable-dropdown" id="item" name="billTo"
+                                style="padding: .6rem 1rem !important;border-color: #6861ce !important;height: inherit !important;">
                                 <option selected="selected">orange</option>
                                 <option>white</option>
                                 <option>purple</option>
@@ -233,15 +235,12 @@
 </footer>
 <script>
     $(document).ready(function () {
+        var billItems = [];
+
+        //Onload events
+        newBillNo();
         billItemTable([]);
-
-        //
-        $('.searchable-dropdown').select2({
-            tags: true
-        });
-        //Date picker function
-
-        //Get bill no
+        docDatePicker();
 
         //Add Item -> Open modal
         $('#openAddItemModal').on('click', function () {
@@ -252,43 +251,69 @@
 
         //Add Item -> Clear form
 
-        //Save Bill
-
         //Load Bill details
 
+        //Save Bill
+        $('#saveBill').on('click', function () {
+            saveBill();
+        });
+
         //Edit Bill
+        $('#editBill').on('click', function () {
+            editBill();
+        });
 
         //New Bill
+        $('#newBill').on('click', function () {
+            clearFormData('#billingForm');
+            $("#date").datepicker("destroy");
+            docDatePicker();
+            billItems.length = 0;
+            clearFormErrorMsg('#billingForm');
+            newBillNo();
+        });
 
     });
-    function populateBillingForm(data){
+    function newBillNo() {
 
     }
 
-    function billItemTable(data){
-        var table = '<thead><tr>'+
-            '<th style="display:none;">id</th>'+
-            '<th>Item Code</th>'+
-            '<th>Item Description</th>'+
-            '<th>Unit</th>'+
-            '<th>Qty</th>'+
-            '<th>Unit Price</th>'+
-            '<th>Value</th>'+
+    function saveBill() {
+
+    }
+
+    function editBill() {
+
+    }
+
+    function populateBillingForm(data) {
+
+    }
+
+    function billItemTable(data) {
+        var table = '<thead><tr>' +
+            '<th style="display:none;">id</th>' +
+            '<th>Item Code</th>' +
+            '<th>Item Description</th>' +
+            '<th>Unit</th>' +
+            '<th>Qty</th>' +
+            '<th>Unit Price</th>' +
+            '<th>Value</th>' +
             '</tr></thead><tbody>';
         for (var i in data) {
-            table += '<tr>'+
-                '<td style="display:none;">'+ data[i].date +
-                '</td><td>'+ data[i].time +
-                '</td><td>'+ data[i].qty +
-                '</td><td>'+ data[i].qty +
-                '</td><td>'+ data[i].qty +
-                '</td><td>'+ data[i].qty +
-                '</td><td>'+ data[i].qty +
+            table += '<tr>' +
+                '<td style="display:none;">' + data[i].date +
+                '</td><td>' + data[i].time +
+                '</td><td>' + data[i].qty +
+                '</td><td>' + data[i].qty +
+                '</td><td>' + data[i].qty +
+                '</td><td>' + data[i].qty +
+                '</td><td>' + data[i].qty +
                 '</td></tr>';
         }
         table += '</tbody>';
         $("#billItemTable").html(table);
-        $("#billItemTable").DataTable({ "dom": 'lrtip', "lengthChange": false, "aaSorting": [], pageLength: 5,"destroy": true });
+        $("#billItemTable").DataTable({ "dom": 'lrtip', "lengthChange": false, "aaSorting": [], pageLength: 5, "destroy": true });
     }
-    
+
 </script>
