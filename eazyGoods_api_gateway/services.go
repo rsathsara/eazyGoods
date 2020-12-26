@@ -61,6 +61,7 @@ func (api *API) apiHandler(w http.ResponseWriter, r *http.Request) {
 func getURL(urlPath string, apiName string) string {
 	urlPart := strings.Split(urlPath, "/")
 	var serviceURL string
+	var serviceRequest string
 	for _, v := range services {
 		if v.APIName == apiName && v.Name == urlPart[2] {
 			serviceURL = v.URL
@@ -68,7 +69,7 @@ func getURL(urlPath string, apiName string) string {
 		}
 	}
 	if len(serviceURL) > 0 {
-		serviceRequest := url.PathEscape(strings.TrimLeft(urlPath, apiName+urlPart[2]+"/"))
+		serviceRequest = url.PathEscape(strings.TrimPrefix(urlPath, apiName+urlPart[2]+"/"))
 		return serviceURL + serviceRequest
 	}
 	return ""

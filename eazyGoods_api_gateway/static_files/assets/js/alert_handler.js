@@ -57,7 +57,8 @@ function ajaxErrorAlert(error){
 		footer: '<a href="#" id="showDetailError">View Detail Error</a>'
 	});
 	$('#showDetailError').on('click', function () {
-		showDetailError(error.responseText);
+		var body = JSON.parse(error.body)
+		showDetailError(body.msg);
 	});
 }
 

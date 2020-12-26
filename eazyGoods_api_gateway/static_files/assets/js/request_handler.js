@@ -1,3 +1,8 @@
+const gateway = "eazyGoods_api/";
+function getDefaultGateway(){
+    return gateway
+}
+
 function request_handler(request) {
     var response;
     $.ajax({
@@ -7,11 +12,12 @@ function request_handler(request) {
         dataType: "json",
         data: request.data,
         success: function (data) {
+            var body = JSON.parse(data.body)
             if (data.status != 200){
                 response = {status: false, body: ""};
-                ajaxErrorAlert(data.body);
+                ajaxErrorAlert(body);
             } else{
-                response = {status: true, body: data.body};
+                response = {status: true, body: body};
             }
         },
         error: function(error){

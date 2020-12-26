@@ -1,6 +1,7 @@
 package main
 
 import (
+	"fmt"
 	"html/template"
 	"net/http"
 
@@ -24,7 +25,17 @@ func homePage(w http.ResponseWriter, r *http.Request) {
 	box, _ := rice.FindBox("static_files/templates")
 	t, _ := box.String("main.html")
 	tmplMessage, _ := template.New("message").Parse(t)
-	tmplMessage.Execute(w, nil)
+	sessionDetails := sessionDetails(w, r)
+	tmplMessage.Execute(w, sessionDetails)
+}
+
+func sessionDetails(w http.ResponseWriter, r *http.Request) SessionDetails {
+	session, _ := store.Get(r, "cookie-name")
+	var sessionDetails = SessionDetails{}
+	sessionDetails.Username = fmt.Sprintf("%v", session.Values["username"])
+	sessionDetails.ID = session.Values["userId"].(int)
+	sessionDetails.Name = fmt.Sprintf("%v", session.Values["name"])
+	return sessionDetails
 }
 
 func billingFormPage(w http.ResponseWriter, r *http.Request) {

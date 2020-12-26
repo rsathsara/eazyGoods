@@ -36,26 +36,28 @@
                                             <i class="fa fa-save"></i>
                                         </span> Save</button>
                                     <button type="button" class="btn btn-success" id="editBill"
-                                        style="padding: 3px 15px;font-size: 1rem;">
+                                        style="padding: 3px 15px;font-size: 1rem;display: none;">
                                         <span class="btn-label">
                                             <i class="far fa-edit"></i>
                                         </span> Edit</button>
+                                    <button type="button" class="btn btn-danger" id="cancelBill"
+                                        style="padding: 3px 15px;font-size: 1rem;display: none;">
+                                        <span class="btn-label">
+                                            <i class="fas fa-trash-alt"></i>
+                                        </span> Cancel</button>
                                 </div>
                             </div>
                         </div>
                     </div>
                     <div class="card-body">
                         <form id="billingForm">
-                            <div style="border-bottom: 1px solid #b4b7b6;font-size: 1.25rem;
-                                font-weight: bold;padding: 5px;">General</div>
                             <div class="row" style="padding-left: 5px;padding-right: 5px;">
                                 <div class="col-md-2 formRowInput">
                                     <div class="form-group">
                                         <label>Bill Date</label>
                                         <div class="input-group">
                                             <div class="input-group-prepend">
-                                                <span class="input-group-text"
-                                                    style="border-color: #6861ce !important;">
+                                                <span class="input-group-text">
                                                     <i class="fa fa-calendar"></i>
                                                 </span>
                                             </div>
@@ -73,11 +75,8 @@
                                 <div class="col-md-8 formRowInput">
                                     <div class="form-group">
                                         <label for="billTo">Bill To</label>
-                                        <select class="form-control searchable-dropdown" name="billTo" id="billTo"
-                                            style="padding: .6rem 1rem !important;border-color: #6861ce !important;height: inherit !important;">
-                                            <option selected="selected">orange</option>
-                                            <option>white</option>
-                                            <option>purple</option>
+                                        <select class="form-control searchable-dropdown" name="billTo" id="billTo">
+
                                         </select>
                                     </div>
                                 </div>
@@ -85,17 +84,65 @@
 
                             <div style="border-bottom: 1px solid #b4b7b6;font-size: 1.25rem;
                                 font-weight: bold;padding: 5px;">Item List</div>
-                            <div class="row" style="padding-left: 15px;padding-right: 15px;padding-top: 5px;">
-                                <div class="col-md-12 formRowInput">
-                                    <button type="button" style="padding: 3px 15px;font-size: 1rem;"
-                                        class="btn btn-primary" id="openAddItemModal">
-                                        <span class="btn-label">
-                                            <i class="fa fa-plus"></i>
-                                        </span> Add Items</button>
+                            <div id="addItemForm" class="row"
+                                style="padding-left: 10px;padding-right: 10px;padding-top: 5px;">
+                                <div class="col-md-6 formRowInput">
+                                    <div class="form-group">
+                                        <label for="item">Item Description</label>
+                                        <select class="form-control searchable-dropdown" name="item" id="item">
+                                        </select>
+                                    </div>
                                 </div>
+                                <div class="col-md-1 formRowInput">
+                                    <div class="form-group">
+                                        <label>Unit</label>
+                                        <input name="unitDes" type="text" class="form-control" readonly>
+                                    </div>
+                                </div>
+                                <div class="col-md-1 formRowInput">
+                                    <div class="form-group">
+                                        <label>SOH</label>
+                                        <input name="itemSOH" type="text" class="form-control" readonly>
+                                    </div>
+                                </div>
+                                <div class="col-md-1 formRowInput">
+                                    <div class="form-group">
+                                        <label>Qty</label>
+                                        <input name="itemQty" type="text" class="form-control">
+                                    </div>
+                                </div>
+                                <div class="col-md-1 formRowInput">
+                                    <div class="form-group">
+                                        <label>Price</label>
+                                        <input name="itemPrice" type="text" class="form-control">
+                                    </div>
+                                </div>
+                                <div class="col-md-2 formRowInput">
+                                    <div class="form-group">
+                                        <label>Value</label>
+                                        <input name="itemValue"  type="text" class="form-control" readonly>
+                                    </div>
+                                </div>
+                                <input name="itemIndex" class="hideOnNew" value="" type="hidden">
+                                <input name="itemDes" class="hideOnNew" value="" type="hidden">
+                                <input name="itemCode" class="hideOnNew" value="" type="hidden">
+                                <input name="unitId" class="hideOnNew" value="" type="hidden">
+                            </div>
+                            <div class="row" style="padding-left: 10px;padding-right: 10px;padding-top: 5px;">
+                                <div class="col-md-12 formRowInput">
+                                    <div
+                                        style="float: right;padding-bottom: 0px;padding-top: 0px;padding-left: 10px;padding-right: 10px;">
+                                        <button type="button" class="btn btn-danger" id="clearItem"
+                                            style="padding: 3px 15px;font-size: 1rem;">
+                                            Clear</button>
+                                        <button type="button" class="btn btn-success" id="addItem"
+                                            style="padding: 3px 15px;font-size: 1rem;">
+                                            Add</button>
+                                    </div>
+                                </dIV>
                             </div>
                             <div class="row">
-                                <div class="col-md-12 formRowInput">
+                                <div class="col-md-9 formRowInput">
                                     <div class="table-responsive">
                                         <table id="billItemTable" class="display table-striped table-hover dataTable"
                                             width="100%">
@@ -103,33 +150,38 @@
                                         </table>
                                     </div>
                                 </div>
+                                <div class="col-md-3 formRowInput">
+                                    <div class="form-group form-inline">
+                                        <label for="billTotal" class="col-md-3 col-form-label">Bill Total</label>
+                                        <div class="col-md-9 p-0">
+                                            <input  id="billTotal" name="billTotal" type="text"
+                                                class="form-control input-full" value="0" readonly>
+                                        </div>
+                                    </div>
+                                    <div class="form-group form-inline">
+                                        <label for="cash" class="col-md-3 col-form-label">Cash</label>
+                                        <div class="col-md-9 p-0">
+                                            <input id="cash" name="cash" type="text" value="0"
+                                                class="form-control input-full">
+                                        </div>
+                                    </div>
+                                    <div class="form-group form-inline">
+                                        <label for="creditCard" class="col-md-3 col-form-label">C/C</label>
+                                        <div class="col-md-9 p-0">
+                                            <input id="creditCard" name="creditCard" type="text"
+                                                class="form-control input-full" value="0" readonly>
+                                        </div>
+                                    </div>
+                                    <div class="form-group form-inline">
+                                        <label for="balance" class="col-md-3 col-form-label">Balance</label>
+                                        <div class="col-md-9 p-0">
+                                            <input  id="balance" name="balance" type="text"
+                                                class="form-control input-full" value="0" readonly>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
-                            <div class="row">
-                                <div class="col-md-3 formRowInput">
-                                    <div class="form-group">
-                                        <label>Bill Total</label>
-                                        <input name="billTotal" type="text" class="form-control" readonly>
-                                    </div>
-                                </div>
-                                <div class="col-md-3 formRowInput">
-                                    <div class="form-group">
-                                        <label>Cash</label>
-                                        <input name="cash" type="text" class="form-control">
-                                    </div>
-                                </div>
-                                <div class="col-md-3 formRowInput">
-                                    <div class="form-group">
-                                        <label>C/C</label>
-                                        <input name="creditCard" type="text" class="form-control">
-                                    </div>
-                                </div>
-                                <div class="col-md-3 formRowInput">
-                                    <div class="form-group">
-                                        <label>Balance</label>
-                                        <input name="balance" type="text" class="form-control" readonly>
-                                    </div>
-                                </div>
-                            </div>
+                            <input name="docId" class="hideOnNew" value="" type="hidden">
                         </form>
                     </div>
                 </div>
@@ -138,94 +190,6 @@
 
     </div>
 </div>
-
-<!-- add item Modal -->
-<div class="modal fade" id="addItemModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle"
-    aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered" style="max-width: 35rem" role="document">
-        <div class="modal-content">
-            <div class="modal-header" style="background-color: #16629e;">
-                <div class="heading lead" style="color: #fff;">Add Items</div>
-
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true" class="white-text" style="color: #eaeaea;">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                <div class="row">
-                    <div class="col-md-12 formRowInput">
-                        <div class="form-group">
-                            <label for="item">Bill To</label>
-                            <select class="form-control searchable-dropdown" id="item" name="billTo"
-                                style="padding: .6rem 1rem !important;border-color: #6861ce !important;height: inherit !important;">
-                                <option selected="selected">orange</option>
-                                <option>white</option>
-                                <option>purple</option>
-                            </select>
-                        </div>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-md-4 formRowInput">
-                        <div class="form-group">
-                            <label>Code</label>
-                            <input name="itemCode" type="text" class="form-control" readonly>
-                        </div>
-                    </div>
-                    <div class="col-md-4 formRowInput">
-                        <div class="form-group">
-                            <label>Unit</label>
-                            <input name="itemUnit" type="text" class="form-control" readonly>
-                        </div>
-                    </div>
-                    <div class="col-md-4 formRowInput">
-                        <div class="form-group">
-                            <label>SOH</label>
-                            <input name="itemSOH" type="text" class="form-control" readonly>
-                        </div>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-md-4 formRowInput">
-                        <div class="form-group">
-                            <label>Qty</label>
-                            <input name="itemQty" type="text" class="form-control">
-                        </div>
-                    </div>
-                    <div class="col-md-4 formRowInput">
-                        <div class="form-group">
-                            <label>Price</label>
-                            <input name="itemPrice" type="text" class="form-control">
-                        </div>
-                    </div>
-                    <div class="col-md-4 formRowInput">
-                        <div class="form-group">
-                            <label>Value</label>
-                            <input name="itemValue" type="text" class="form-control" readonly>
-                        </div>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-md-12 formRowInput">
-                        <div
-                            style="float: right;padding-bottom: 0px;padding-top: 0px;padding-left: 10px;padding-right: 10px;">
-                            <button type="button" class="btn btn-danger" id="clearItem"
-                                style="padding: 3px 15px;font-size: 1rem;">
-                                New</button>
-                            <button type="button" class="btn btn-success" id="addItem"
-                                style="padding: 3px 15px;font-size: 1rem;">
-                                Add</button>
-                        </div>
-                    </dIV>
-                </div>
-            </div>
-            <div class="modal-footer" style="background-color:#16629e; padding:0.5rem; border-radius:0;">
-            </div>
-
-        </div>
-    </div>
-</div>
-<!-- add item Modal End -->
 <footer class="footer">
     <div class="container-fluid">
         <div class="copyright ml-auto">
@@ -233,87 +197,9 @@
         </div>
     </div>
 </footer>
+<script src="assets/modules/billing.js"></script>
 <script>
     $(document).ready(function () {
-        var billItems = [];
-
-        //Onload events
-        newBillNo();
-        billItemTable([]);
-        docDatePicker();
-
-        //Add Item -> Open modal
-        $('#openAddItemModal').on('click', function () {
-            $('#addItemModal').modal('show');
-        });
-
-        //Add Item -> Add item
-
-        //Add Item -> Clear form
-
-        //Load Bill details
-
-        //Save Bill
-        $('#saveBill').on('click', function () {
-            saveBill();
-        });
-
-        //Edit Bill
-        $('#editBill').on('click', function () {
-            editBill();
-        });
-
-        //New Bill
-        $('#newBill').on('click', function () {
-            clearFormData('#billingForm');
-            $("#date").datepicker("destroy");
-            docDatePicker();
-            billItems.length = 0;
-            clearFormErrorMsg('#billingForm');
-            newBillNo();
-        });
-
+        billingForm();
     });
-    function newBillNo() {
-
-    }
-
-    function saveBill() {
-
-    }
-
-    function editBill() {
-
-    }
-
-    function populateBillingForm(data) {
-
-    }
-
-    function billItemTable(data) {
-        var table = '<thead><tr>' +
-            '<th style="display:none;">id</th>' +
-            '<th>Item Code</th>' +
-            '<th>Item Description</th>' +
-            '<th>Unit</th>' +
-            '<th>Qty</th>' +
-            '<th>Unit Price</th>' +
-            '<th>Value</th>' +
-            '</tr></thead><tbody>';
-        for (var i in data) {
-            table += '<tr>' +
-                '<td style="display:none;">' + data[i].date +
-                '</td><td>' + data[i].time +
-                '</td><td>' + data[i].qty +
-                '</td><td>' + data[i].qty +
-                '</td><td>' + data[i].qty +
-                '</td><td>' + data[i].qty +
-                '</td><td>' + data[i].qty +
-                '</td></tr>';
-        }
-        table += '</tbody>';
-        $("#billItemTable").html(table);
-        $("#billItemTable").DataTable({ "dom": 'lrtip', "lengthChange": false, "aaSorting": [], pageLength: 5, "destroy": true });
-    }
-
 </script>

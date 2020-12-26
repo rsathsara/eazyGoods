@@ -61,7 +61,7 @@
 			<nav class="navbar navbar-header navbar-expand-lg" data-background-color="blue2">
 				
 				<div class="container-fluid">
-					<div class="collapse" id="search-nav">
+					<!-- <div class="collapse" id="search-nav">
 						<form class="navbar-left navbar-form nav-search mr-md-3">
 							<div class="input-group">
 								<div class="input-group-prepend">
@@ -72,7 +72,7 @@
 								<input type="text" placeholder="Search ..." class="form-control">
 							</div>
 						</form>
-					</div>
+					</div> -->
 					<ul class="navbar-nav topbar-nav ml-md-auto align-items-center">
 						<li hidden class="nav-item toggle-nav-search hidden-caret">
 							<a class="nav-link" data-toggle="collapse" href="#" role="button" aria-expanded="false" aria-controls="search-nav">
@@ -104,7 +104,7 @@
 										<div class="user-box">
 											<div class="avatar-lg"><img src="assets/img/images.png" alt="image profile" class="avatar-img rounded"></div>
 											<div class="u-text">
-												<h4>{{.Fname}}</h4>
+												<h4>{{.Name}}</h4>
 												<a href="#" class="btn btn-xs btn-secondary btn-sm" class="viewProfile">View Profile</a>
 											</div>
 										</div>
@@ -136,8 +136,8 @@
 						<div class="info">
 							<a data-toggle="collapse" href="#collapseExample" aria-expanded="true">
 								<span>
-									{{.Fname}}
-									<span class="user-level">{{.Uname}}</span>
+									{{.Name}}
+									<span class="user-level">{{.Username}}</span>
 									<span class="caret"></span>
 								</span>
 							</a>
@@ -251,14 +251,16 @@
 	<script src="assets/vendorJs/select2.min.js"></script>
 	
 	<!-- Custom JS -->
-	<script src="assets/js/default_services.js"></script>
 	<script src="assets/js/alert_handler.js"></script>
 	<script src="assets/js/request_handler.js"></script>
+	<script src="assets/js/custom.js"></script>
 
 </body>
 </html>
 <script>
 	$(document).ready(function () {
+		$.fn.modal.Constructor.prototype._enforceFocus = function() {};
+
 		//Click event handler for nav-items
 		$('.nav-item').on('click',function(){
 
@@ -268,9 +270,6 @@
 			//Add active class to the clicked item
 			$(this).addClass('active');
 		});
-
-		//Select2 function for searchable dropdowns 
-        $('.searchable-dropdown').select2({tags: true});
 
 	});
 </script>		

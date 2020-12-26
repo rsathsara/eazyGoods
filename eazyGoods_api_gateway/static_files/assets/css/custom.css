@@ -32,3 +32,17 @@
 	z-index: 999999999999 !important;
 }
 /* tooltip styles end*/
+
+.form-control{
+    padding: .150rem .75rem !important;
+    border: 1px solid #aaa !important;
+}
+.input-group-text{
+    border: 1px solid #aaa !important;
+}
+/* .select2-close-mask{
+    z-index: 999999999999 !important;
+}
+.select2-dropdown{
+    z-index: 999999999999 !important;
+} */
