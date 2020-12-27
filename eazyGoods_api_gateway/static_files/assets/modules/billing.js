@@ -174,10 +174,8 @@ function addItemHandler(data) {
         id: parseInt($('input[name="itemIndex"]').val()),
         code: $('input[name="itemCode"]').val(),
         description: $('input[name="itemDes"]').val(),
-        unit: {
-            id: parseInt($('input[name="unitId"]').val()),
-            description: $('input[name="unitDes"]').val()
-        },
+        unitId: parseInt($('input[name="unitId"]').val()),
+        unitDescription: $('input[name="unitDes"]').val(),
         qty: parseFloat($('input[name="itemQty"]').val()),
         price: parseFloat($('input[name="itemPrice"]').val()),
         value: parseFloat($('input[name="itemValue"]').val()),
@@ -215,19 +213,19 @@ function saveBill(itemArray) {
         id: parseInt($('input[name="docId"]').val()),
         date: $('input[name="docDate"]').val(),
         billNo: $('input[name="docNo"]').val(),
-        billTo: parseInt($('select[name="billTo"]').val()),
+        billToId: parseInt($('select[name="billTo"]').val()),
         billDetails: itemArray,
         billTotal: parseFloat($('input[name="billTotal"]').val()),
         cashPaid: parseFloat($('input[name="cash"]').val()),
         creditPaid: parseFloat($('input[name="creditCard]').val()),
-        // billItems: itemArray,
-        // formData: $('#billingForm').serializeArray()
     }
     data = request_handler({ url: getDefaultGateway() + "main/" + "bills", method: "POST", data: JSON.stringify(sendData)});
-    // billItems: JSON.stringify(itemArray),
-    //     formData: JSON.stringify($('#billingForm').serialize()),
     if (data.status) {
-
+        body = data.body
+        responseAlert(body.responseMsg.status, body.responseMsg.msg);
+        if (body.responseMsg.status == "Success"){
+            $('#newBill').trigger("click");
+        }
     }
 }
 
@@ -257,7 +255,7 @@ function billItemTable(data) {
             '<td style="display:none;">' + data[i].id +
             '</td><td>' + data[i].code +
             '</td><td>' + data[i].description +
-            '</td><td>' + data[i].unit.description +
+            '</td><td>' + data[i].unitDescription +
             '</td><td>' + data[i].qty +
             '</td><td>' + data[i].price +
             '</td><td>' + data[i].value +

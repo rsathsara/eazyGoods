@@ -3,11 +3,11 @@ package main
 import (
 	"database/sql"
 	"encoding/json"
-	"fmt"
 	"io/ioutil"
 	"net/http"
 
 	_ "github.com/denisenkom/go-mssqldb"
+	mssql "github.com/denisenkom/go-mssqldb"
 )
 
 // BillPage struct
@@ -18,23 +18,31 @@ type BillPage struct {
 
 // Bill struct
 type Bill struct {
-	ID         int          `json:"id,omitempty"`
-	Date       string       `json:"date"`
-	BillNo     string       `json:"billNo"`
-	BillTo     string       `json:"billTo"`
+	BillHeader
 	BillDetail []BillDetail `json:"billDetails"`
-	BillTotal  float64      `json:"billTotal"`
-	CashPaid   float64      `json:"cashPaid,omitempty"`
-	CreditPaid float64      `json:"creditPaid,omitempty"`
+}
+
+// BillHeader struct
+type BillHeader struct {
+	ID         int     `json:"id,omitempty" tvp:"id"`
+	Date       string  `json:"date" tvp:"date"`
+	BillNo     string  `json:"billNo" tvp:"-"`
+	BillToID   int     `json:"billToId" tvp:"billToId"`
+	BillTotal  float64 `json:"billTotal" tvp:"billTotal"`
+	CashPaid   float64 `json:"cashPaid,omitempty" tvp:"-"`
+	CreditPaid float64 `json:"creditPaid,omitempty" tvp:"-"`
 }
 
 // BillDetail struct
 type BillDetail struct {
-	Item
-	RecNo int     `json:"recNo"`
-	Qty   float64 `json:"qty"`
-	Price float64 `json:"price"`
-	Value float64 `json:"value"`
+	ItemID           int     `json:"id" tvp:"itemId"`
+	ItemCode         string  `json:"code" tvp:"-"`
+	ItemDesctription string  `json:"description" tvp:"-"`
+	UnitID           int     `json:"unitId" tvp:"-"`
+	RecNo            int     `json:"recNo" tvp:"recNo"`
+	Qty              float64 `json:"qty" tvp:"qty"`
+	Price            float64 `json:"price" tvp:"price"`
+	Value            float64 `json:"value" tvp:"value"`
 }
 
 // Get All Bills
@@ -53,7 +61,6 @@ func getBill(w http.ResponseWriter, r *http.Request) {
 
 // Create a New Bill
 func createBill(w http.ResponseWriter, r *http.Request) {
-	// w.Header().Set("Content-Type", "application/json; charset=utf-8")
 	db, err := sql.Open(dbServer, connectString)
 	errorHandler(w, err)
 	defer db.Close()
@@ -62,19 +69,29 @@ func createBill(w http.ResponseWriter, r *http.Request) {
 	var bill Bill
 	json.Unmarshal(body, &bill)
 
-	dataSet, _ := json.Marshal(bill)
-	row, err := db.Query(`EXEC [sp_bill] @BillData = ?, @Action = ?;`, dataSet, "save")
-	if err != nil {
-		fmt.Println(err)
-	} else {
-		for row.Next() {
-			var firstname string
-			row.Scan(&firstname)
-			fmt.Println(firstname)
-		}
+	var billPage BillPage
+	var billHdSlice []BillHeader
+	billHdSlice = append(billHdSlice, bill.BillHeader)
+	billHdType := mssql.TVP{
+		TypeName: "BillHdTableType",
+		Value:    billHdSlice,
+	}
+	billDtType := mssql.TVP{
+		TypeName: "BillDtTableType",
+		Value:    bill.BillDetail,
 	}
 
-	// fmt.Printf("data : %+v", bill)
+	query := `exec sp_bill @BillHeader = $1, @BillDetail = $2, @Action = $3;`
+	result := db.QueryRow(query, billHdType, billDtType, "save")
+	err = result.Scan(&responseMsg.Status, &responseMsg.Msg)
+	if err != nil {
+		responseMsg.Status = "Error"
+		responseMsg.Msg = string(err.Error())
+	} else {
+		billPage.ResponseMsg = responseMsg
+	}
+	w.Header().Set("Content-Type", "application/json; charset=utf-8")
+	json.NewEncoder(w).Encode(billPage)
 }
 
 // Update Bill
