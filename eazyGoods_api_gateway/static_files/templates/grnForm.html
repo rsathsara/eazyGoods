@@ -1,0 +1,244 @@
+<div class="content">
+    <div class="page-inner">
+        <div class="page-header">
+            <h4 class="page-title">GRN Form</h4>
+            <ul class="breadcrumbs">
+                <li class="nav-home">
+                    <a href="">
+                        <i class="flaticon-home"></i>
+                    </a>
+                </li>
+                <li class="separator">
+                    <i class="flaticon-right-arrow"></i>
+                </li>
+                <li class="nav-item">
+                    <a href="#">Inventory</a>
+                </li>
+            </ul>
+        </div>
+
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="card-header" style="padding: 0.5rem 1.25rem;">
+                        <div class="row">
+                            <div class="col-md-12 formRowInput">
+                                <div
+                                    style="float: right;padding-bottom: 0px;padding-top: 0px;padding-left: 10px;padding-right: 10px;">
+                                    <button type="button" class="btn btn-primary" id="newGrn"
+                                        style="padding: 3px 15px;font-size: 1rem;">
+                                        <i class="fa fa-plus"></i>
+                                        <span class="hide-on-small-screen">
+                                            New
+                                        </span></button>
+                                    <button type="button" class="btn btn-success" id="saveGrn"
+                                        style="padding: 3px 15px;font-size: 1rem;">
+                                        <i class="fa fa-save"></i>
+                                        <span class="hide-on-small-screen">
+                                            Save
+                                        </span></button>
+                                    <button type="button" class="btn btn-success" id="editGrn"
+                                        style="padding: 3px 15px;font-size: 1rem;display: none;">
+                                        <i class="far fa-edit"></i>
+                                        <span class="hide-on-small-screen"> 
+                                            Edit
+                                        </span></button>
+                                    <button type="button" class="btn btn-danger" id="cancelGrn"
+                                        style="padding: 3px 15px;font-size: 1rem;display: none;">
+                                        <i class="fas fa-trash-alt"></i>
+                                        <span class="hide-on-small-screen">
+                                            Cancel
+                                        </span></button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <form id="grnForm">
+                            <div class="row" style="padding-left: 5px;padding-right: 5px;">
+                                <div class="col-md-2 formRowInput">
+                                    <div class="form-group">
+                                        <label>GRN Date</label>
+                                        <div class="input-group">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text">
+                                                    <i class="fa fa-calendar"></i>
+                                                </span>
+                                            </div>
+                                            <input type="text" name="docDate" id="date" class="form-control"
+                                                style="border-right-color: #bcbec6;">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-2 formRowInput">
+                                    <div class="form-group">
+                                        <label>GRN No.</label>
+                                        <div class="input-group">
+                                            <input name="docNo" type="text" class="form-control" style="border-color: #bcbec6 !important;" readonly>
+                                            <div class="input-group-append">
+                                                <span class="input-group-text" id="searchGrnList">
+                                                    <i class="fas fa-search"></i>
+                                                </span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-8 formRowInput">
+                                    <div class="form-group">
+                                        <label for="grnFrom">GRN From</label>
+                                        <select class="form-control searchable-dropdown" name="grnFrom" id="grnFrom">
+
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div style="border-bottom: 1px solid #b4b7b6;font-size: 1.25rem;
+                                font-weight: bold;padding: 5px;">Item List</div>
+                            <div id="addItemForm" class="row"
+                                style="padding-left: 10px;padding-right: 10px;padding-top: 5px;">
+                                <div class="col-md-6 formRowInput">
+                                    <div class="form-group">
+                                        <label for="item">Item Description</label>
+                                        <select class="form-control searchable-dropdown" name="item" id="item">
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-md-1 formRowInput">
+                                    <div class="form-group">
+                                        <label>Unit</label>
+                                        <input name="unitDes" type="text" class="form-control" readonly>
+                                    </div>
+                                </div>
+                                <div class="col-md-1 formRowInput">
+                                    <div class="form-group">
+                                        <label>SOH</label>
+                                        <input name="itemSOH" type="text" class="form-control" readonly>
+                                    </div>
+                                </div>
+                                <div class="col-md-1 formRowInput">
+                                    <div class="form-group">
+                                        <label>Qty</label>
+                                        <input name="itemQty" type="text" class="form-control">
+                                    </div>
+                                </div>
+                                <div class="col-md-1 formRowInput">
+                                    <div class="form-group">
+                                        <label>Price</label>
+                                        <input name="itemPrice" type="text" class="form-control">
+                                    </div>
+                                </div>
+                                <div class="col-md-2 formRowInput">
+                                    <div class="form-group">
+                                        <label>Value</label>
+                                        <input name="itemValue"  type="text" class="form-control" readonly>
+                                    </div>
+                                </div>
+                                <input name="itemIndex" class="hideOnNew" value="" type="hidden">
+                                <input name="itemDes" class="hideOnNew" value="" type="hidden">
+                                <input name="itemCode" class="hideOnNew" value="" type="hidden">
+                                <input name="unitId" class="hideOnNew" value="" type="hidden">
+                            </div>
+                            <div class="row" style="padding-left: 10px;padding-right: 10px;padding-top: 5px;">
+                                <div class="col-md-12 formRowInput">
+                                    <div
+                                        style="float: right;padding-bottom: 0px;padding-top: 0px;padding-left: 10px;padding-right: 10px;">
+                                        <button type="button" class="btn btn-danger" id="clearItem"
+                                            style="padding: 3px 15px;font-size: 1rem;">
+                                            Clear</button>
+                                        <button type="button" class="btn btn-success" id="addItem"
+                                            style="padding: 3px 15px;font-size: 1rem;">
+                                            Add</button>
+                                    </div>
+                                </dIV>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-9 formRowInput">
+                                    <div class="table-responsive">
+                                        <table id="grnItemTable" class="display table-striped table-hover dataTable"
+                                            width="100%">
+
+                                        </table>
+                                    </div>
+                                </div>
+                                <div class="col-md-3 formRowInput">
+                                    <div class="form-group form-inline">
+                                        <label for="grnTotal" class="col-md-3 col-form-label">Grn Total</label>
+                                        <div class="col-md-9 p-0">
+                                            <input id="grnTotal" name="grnTotal" type="text"
+                                                class="form-control input-full" value="0" readonly>
+                                        </div>
+                                    </div>
+                                    <div class="form-group form-inline">
+                                        <label for="cash" class="col-md-3 col-form-label">Cash</label>
+                                        <div class="col-md-9 p-0">
+                                            <input id="cash" name="cash" type="text" value="0"
+                                                class="form-control input-full">
+                                        </div>
+                                    </div>
+                                    <div class="form-group form-inline">
+                                        <label for="creditCard" class="col-md-3 col-form-label">C/C</label>
+                                        <div class="col-md-9 p-0">
+                                            <input id="creditCard" name="creditCard" type="text"
+                                                class="form-control input-full" value="0" readonly>
+                                        </div>
+                                    </div>
+                                    <div class="form-group form-inline">
+                                        <label for="balance" class="col-md-3 col-form-label">Balance</label>
+                                        <div class="col-md-9 p-0">
+                                            <input  id="balance" name="balance" type="text"
+                                                class="form-control input-full" value="0" readonly>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <input name="docId" class="hideOnNew" value="" type="hidden">
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+<footer class="footer">
+    <div class="container-fluid">
+        <div class="copyright ml-auto">
+            <span>Copyright © Max-A Solutions 2019</span>
+        </div>
+    </div>
+</footer>
+<!-- Select GRN List modal -->
+<div class="modal fade" id="grnListModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content" style="border-radius: 0em;">
+            <div class="modal-header custom-modal-hd">
+                <h5 class="modal-title" style="font-size: 1.25rem;font-weight: bold;">GRN List</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true" style="color:#fff;">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="input-group input-group-primary" style="margin: 0px;padding-left: 15px;padding-right: 15px;">
+                    <input type="text" class="form-control" id="grnListTableSearch" placeholder="Search Text"
+                        style="margin: 0px; border-radius: 2rem; color: #34495e;">
+                </div>
+                <div class="table-responsive">
+                    <table id="grnListTable" class="table-sm table-striped table-borded table-hover dataTable no-footer"
+                        width="100%">
+
+
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Select GrnList modal end -->
+<script src="assets/modules/grn.js"></script>
+<script>
+    $(document).ready(function () {
+        grnForm();
+    });
+</script>

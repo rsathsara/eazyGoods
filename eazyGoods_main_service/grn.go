@@ -23,8 +23,3 @@ func createGrn(w http.ResponseWriter, r *http.Request) {
 func updateGrn(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "application/json; charset=utf-8")
 }
-
-// New Grn No
-func newGrnNo() {
-
-}

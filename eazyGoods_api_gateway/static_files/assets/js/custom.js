@@ -91,3 +91,18 @@ function shortPopUp(data) {
 		delay: 1000,
 	});
 }
+
+function searchTables(tableId, tableSearchId) {
+    var otherEntryTable = $(tableId).DataTable({ "dom": 'lrtip', "lengthChange": false, "aaSorting": [], pageLength: 5, "destroy": true });
+    $(tableSearchId).keyup(function () {
+        otherEntryTable.search($(this).val()).draw();
+    });
+}
+
+function validator(data){
+	
+}
+
+function defaultValidation(){
+	
+}

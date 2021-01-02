@@ -40,6 +40,11 @@
 .input-group-text{
     border: 1px solid #aaa !important;
 }
+@media only screen and (max-width: 768px) {
+	.hide-on-small-screen{
+		display: none;
+	}
+}
 /* .select2-close-mask{
     z-index: 999999999999 !important;
 }

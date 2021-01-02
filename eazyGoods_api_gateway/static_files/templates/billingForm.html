@@ -27,24 +27,28 @@
                                     style="float: right;padding-bottom: 0px;padding-top: 0px;padding-left: 10px;padding-right: 10px;">
                                     <button type="button" class="btn btn-primary" id="newBill"
                                         style="padding: 3px 15px;font-size: 1rem;">
-                                        <span class="btn-label">
-                                            <i class="fa fa-plus"></i>
-                                        </span> New</button>
+                                        <i class="fa fa-plus"></i>
+                                        <span class="hide-on-small-screen">
+                                            New
+                                        </span></button>
                                     <button type="button" class="btn btn-success" id="saveBill"
                                         style="padding: 3px 15px;font-size: 1rem;">
-                                        <span class="btn-label">
-                                            <i class="fa fa-save"></i>
-                                        </span> Save</button>
+                                        <i class="fa fa-save"></i>
+                                        <span class="hide-on-small-screen">
+                                            Save
+                                        </span></button>
                                     <button type="button" class="btn btn-success" id="editBill"
                                         style="padding: 3px 15px;font-size: 1rem;display: none;">
-                                        <span class="btn-label">
-                                            <i class="far fa-edit"></i>
-                                        </span> Edit</button>
+                                        <i class="far fa-edit"></i>
+                                        <span class="hide-on-small-screen"> 
+                                            Edit
+                                        </span></button>
                                     <button type="button" class="btn btn-danger" id="cancelBill"
                                         style="padding: 3px 15px;font-size: 1rem;display: none;">
-                                        <span class="btn-label">
-                                            <i class="fas fa-trash-alt"></i>
-                                        </span> Cancel</button>
+                                        <i class="fas fa-trash-alt"></i>
+                                        <span class="hide-on-small-screen">
+                                            Cancel
+                                        </span></button>
                                 </div>
                             </div>
                         </div>
@@ -69,7 +73,14 @@
                                 <div class="col-md-2 formRowInput">
                                     <div class="form-group">
                                         <label>Bill No.</label>
-                                        <input name="docNo" type="text" class="form-control">
+                                        <div class="input-group">
+                                            <input name="docNo" type="text" class="form-control" style="border-color: #bcbec6 !important;" readonly>
+                                            <div class="input-group-append">
+                                                <span class="input-group-text" id="searchBillList">
+                                                    <i class="fas fa-search"></i>
+                                                </span>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                                 <div class="col-md-8 formRowInput">
@@ -154,7 +165,7 @@
                                     <div class="form-group form-inline">
                                         <label for="billTotal" class="col-md-3 col-form-label">Bill Total</label>
                                         <div class="col-md-9 p-0">
-                                            <input  id="billTotal" name="billTotal" type="text"
+                                            <input id="billTotal" name="billTotal" type="text"
                                                 class="form-control input-full" value="0" readonly>
                                         </div>
                                     </div>
@@ -197,6 +208,34 @@
         </div>
     </div>
 </footer>
+<!-- Select Bill List modal -->
+<div class="modal fade" id="billListModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content" style="border-radius: 0em;">
+            <div class="modal-header custom-modal-hd">
+                <h5 class="modal-title" style="font-size: 1.25rem;font-weight: bold;">Bill List</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true" style="color:#fff;">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="input-group input-group-primary" style="margin: 0px;padding-left: 15px;padding-right: 15px;">
+                    <input type="text" class="form-control" id="billListTableSearch" placeholder="Search Text"
+                        style="margin: 0px; border-radius: 2rem; color: #34495e;">
+                </div>
+                <div class="table-responsive">
+                    <table id="billListTable" class="table-sm table-striped table-borded table-hover dataTable no-footer"
+                        width="100%">
+
+
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Select BillList modal end -->
 <script src="assets/modules/billing.js"></script>
 <script>
     $(document).ready(function () {
