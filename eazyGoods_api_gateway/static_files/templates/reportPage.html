@@ -1,0 +1,116 @@
+<div class="content">
+    <div class="page-inner">
+        <div class="page-header">
+            <h4 class="page-title">Reports</h4>
+            <ul class="breadcrumbs">
+                <li class="nav-home">
+                    <a href="">
+                        <i class="flaticon-home"></i>
+                    </a>
+                </li>
+                <li class="separator">
+                    <i class="flaticon-right-arrow"></i>
+                </li>
+                <li class="nav-item">
+                    <a href="#">Reporting</a>
+                </li>
+            </ul>
+        </div>
+
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="card-header" style="padding: 0.5rem 1.25rem;">
+                        <div class="row">
+                            <div class="col-md-4 formRowInput">
+                                <div class="form-group">
+                                    <label for="report">Select Report</label>
+                                    <select name="report" class="form-control" id="report" required>
+                                        <option value="">&nbsp;</option>
+                                        {{range .}}
+                                        <option value="{{.ID}}">{{.Description}}</option>
+                                        {{end}}
+
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-md-3 formRowInput">
+                                <div class="form-group">
+                                    <label>Select Date Range</label>
+                                    <div class="input-group">
+                                        <input type="text" name="reportDateRange" id="reportDateRange"
+                                            class="form-control" style="border-right-color: #bcbec6;">
+                                        <div class="input-group-append">
+                                            <span class="input-group-text" style="border-color: #6861ce !important;">
+                                                <i class="fa fa-calendar"></i>
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-5 formRowInput">
+                                
+                            </div>
+                            <input type="hidden" value="" name="startDate">
+                            <input type="hidden" value="" name="endDate">
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12 formRowInput">
+                                <div style="float: right;">
+                                    <button type="button" class="btn btn-primary" id="generateReport"
+                                        style="padding: 3px 15px;font-size: 1rem;">
+                                        <i class="fas fa-search"></i>
+                                        <span class="hide-on-small-screen">
+                                            Generate
+                                        </span></button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-md-12 formRowInput">
+                                <div class="table-responsive">
+                                    <table id="reportTable" class="display table-striped table-hover dataTable"
+                                        width="100%">
+
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+<footer class="footer">
+    <div class="container-fluid">
+        <div class="copyright ml-auto">
+            <span>Copyright © Max-A Solutions 2019</span>
+        </div>
+    </div>
+</footer>
+<!-- <script src="assets/modules/report.js"></script> -->
+<script>
+    $(document).ready(function () {
+        var start = moment();
+        var end = moment();
+
+        function cb(start, end) {
+            $('input[name="startDate"]').val(start.format('YYYY-MM-DD'));
+            $('input[name="endDate"]').val(end.format('YYYY-MM-DD'));
+        }
+
+        $('#reportDateRange').daterangepicker({
+            startDate: start,
+            endDate: end,
+            minDate: '04/01/2019',
+            maxDate: moment(),
+            locale: { format: 'YYYY/MM/DD' }
+        }, cb);
+
+        cb(start, end);
+    });
+</script>

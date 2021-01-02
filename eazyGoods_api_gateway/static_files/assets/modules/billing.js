@@ -132,7 +132,7 @@ function newBillNo() {
 function loadCustomerDropdown() {
     data = request_handler({ url: getDefaultGateway() + "main/" + "customers", method: "GET", data: {} });
     if (data.status) {
-        customers = data.body
+        customers = (data.body == null) ? ([]) : (data.body)
         $('select[name="billTo"]').find('option').remove().end();
         for (var i = 0; i < customers.length; i++) {
             $('select[name="billTo"]').append("<option value='" + customers[i].id + "'>" + customers[i].description + "</option>");
@@ -266,7 +266,7 @@ function calBillValue(itemArray) {
 
 function addItemHandler(data) {
     var itemArray = data.itemArray;
-    var values = billFromData({action: "addItemData", itemArray: itemArray});
+    var values = billFormData({action: "addItemData", itemArray: itemArray});
     switch (data.action) {
         case "add":
             if (itemArray == undefined || Object.keys(itemArray).length === 0) {
@@ -329,7 +329,7 @@ function addItemHandler(data) {
 //     "billItemPrice": { value: "", element: "", labal: "", warning: "", conditions: [{ name: "", msg: "", data: {} }] },
 // };
 
-function billFromData(data){
+function billFormData(data){
     switch (data.action){
         case "sendData":
             var sendData = {
@@ -363,7 +363,7 @@ function billFromData(data){
 }
 
 function saveBill(billItems) {
-    var sendData = billFromData({action: "sendData", itemArray: billItems});
+    var sendData = billFormData({action: "sendData", itemArray: billItems});
     data = request_handler({ url: getDefaultGateway() + "main/" + "bills", method: "POST", data: JSON.stringify(sendData) });
     if (data.status) {
         body = data.body
@@ -376,7 +376,7 @@ function saveBill(billItems) {
 
 function editBill(billItems) {
     var id = $('input[name="docId"]').val();
-    var sendData = billFromData({action: "sendData", itemArray: billItems});
+    var sendData = billFormData({action: "sendData", itemArray: billItems});
     data = request_handler({ url: getDefaultGateway() + "main/" + "bills/" + id, method: "PUT", data: JSON.stringify(sendData) });
     if (data.status) {
         body = data.body

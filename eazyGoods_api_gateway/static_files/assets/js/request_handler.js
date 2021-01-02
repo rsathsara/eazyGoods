@@ -33,6 +33,7 @@ $(".viewProfile").click(function () { $("#pageContentLoader").load("/userProfile
 $(".viewChangePswd").click(function () { $("#pageContentLoader").load("/changePassword") });
 $(".viewGrnForm").click(function () { $("#pageContentLoader").load("/grnFormPage") });
 $(".viewBillingForm").click(function () { $("#pageContentLoader").load("/billingFormPage") });
+$(".viewReportForm").click(function () { $("#pageContentLoader").load("/reportPage") });
 
 
 

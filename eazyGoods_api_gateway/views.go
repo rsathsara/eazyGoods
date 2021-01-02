@@ -64,6 +64,21 @@ func grnFormPage(w http.ResponseWriter, r *http.Request) {
 	tmplMessage.Execute(w, nil)
 }
 
+func reportPage(w http.ResponseWriter, r *http.Request) {
+	if sessionResponse := sessionCheck(w, r); !sessionResponse {
+		redirectToLoginPage(w, r)
+	}
+	box, _ := rice.FindBox("static_files/templates")
+	t, _ := box.String("reportPage.html")
+	tmplMessage, _ := template.New("message").Parse(t)
+	reportList := []ReportList{
+		{ID: 1, Description: "GRN List"},
+		{ID: 2, Description: "Invoice List"},
+		{ID: 3, Description: "Stock Balance Report"},
+	}
+	tmplMessage.Execute(w, reportList)
+}
+
 func redirectToLoginPage(w http.ResponseWriter, r *http.Request) {
 	http.Redirect(w, r, "/loginPage", 302)
 	return

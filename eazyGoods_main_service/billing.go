@@ -6,7 +6,6 @@ import (
 	"io/ioutil"
 	"net/http"
 
-	_ "github.com/denisenkom/go-mssqldb"
 	mssql "github.com/denisenkom/go-mssqldb"
 	"github.com/gorilla/mux"
 )
@@ -164,6 +163,7 @@ func updateBill(w http.ResponseWriter, r *http.Request) {
 
 	vars := mux.Vars(r)
 	id := vars["id"]
+
 	body, _ := ioutil.ReadAll(r.Body)
 	var bill Bill
 	json.Unmarshal(body, &bill)

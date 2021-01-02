@@ -19,7 +19,7 @@ function grnForm() {
     });
 
     // Load Grn Details
-    $('#grnListTable').on('click', '.selectgrn', function () {
+    $('#grnListTable').on('click', '.selectGrn', function () {
         var cs = $(this).closest('tr');
         var index = cs.find('td:eq(0)').text()
         $('#grnListModal').modal('hide');
@@ -91,8 +91,8 @@ function grnForm() {
     });
 
     //Edit Grn
-    $('#editgrn').on('click', function () {
-        editgrn(grnItems);
+    $('#editGrn').on('click', function () {
+        editGrn(grnItems);
     });
 
     //Cancel Grn
@@ -132,7 +132,7 @@ function newGrnNo() {
 function loadSupplierDropdown() {
     data = request_handler({ url: getDefaultGateway() + "main/" + "suppliers", method: "GET", data: {} });
     if (data.status) {
-        suppliers = data.body
+        suppliers = (data.body == null) ? ([]) : (data.body)
         $('select[name="grnFrom"]').find('option').remove().end();
         for (var i = 0; i < suppliers.length; i++) {
             $('select[name="grnFrom"]').append("<option value='" + suppliers[i].id + "'>" + suppliers[i].description + "</option>");
@@ -219,7 +219,7 @@ function grnList() {
             '<th class="th-sm">Date</th>' +
             '</tr></thead><tbody>';
         for (var i = 0; i < list.length; i++) {
-            row += '<tr class="selectGRN"><td style="display:none;">' + list[i].id + '</td>' +
+            row += '<tr class="selectGrn"><td style="display:none;">' + list[i].id + '</td>' +
                 '</td><td>' + list[i].grnNo +
                 '</td><td>' + list[i].date +
                 '</td></tr>';
@@ -238,7 +238,7 @@ function grnDetail(id) {
         grn = data.body.grn[0];
         $('input[name="docNo"]').val(grn.grnNo);
         $('input[name="docDate"]').val(grn.date);
-        $('select[name="grnFrom"]').val(grn.grnToId);
+        $('select[name="grnFrom"]').val(grn.grnFromId);
         $('input[name="grnTotal"]').val(grn.grnTotal);
         $('input[name="balance"]').val(grn.grnTotal);
         $('input[name="docId"]').val(grn.id);
@@ -266,7 +266,7 @@ function calGrnValue(itemArray) {
 
 function addItemHandler(data) {
     var itemArray = data.itemArray;
-    var values = grnFromData({action: "addItemData", itemArray: itemArray});
+    var values = grnFormData({action: "addItemData", itemArray: itemArray});
     switch (data.action) {
         case "add":
             if (itemArray == undefined || Object.keys(itemArray).length === 0) {
@@ -329,17 +329,17 @@ function addItemHandler(data) {
 //     "billItemPrice": { value: "", element: "", labal: "", warning: "", conditions: [{ name: "", msg: "", data: {} }] },
 // };
 
-function grnFromData(data){
+function grnFormData(data){
     switch (data.action){
         case "sendData":
             var sendData = {
                 id: parseInt($('input[name="docId"]').val()),
                 date: $('input[name="docDate"]').val(),
                 grnNo: $('input[name="docNo"]').val(),
-                grnToId: parseInt($('select[name="grnTo"]').val()),
+                grnFromId: parseInt($('select[name="grnFrom"]').val()),
                 grnTotal: parseFloat($('input[name="grnTotal"]').val()),
-                cashPaid: parseFloat($('input[name="cash"]').val()),
-                creditPaid: parseFloat($('input[name="creditCard]').val()),
+                // cashPaid: parseFloat($('input[name="cash"]').val()),
+                // creditPaid: parseFloat($('input[name="creditCard]').val()),
                 grnDetails: data.itemArray,
             }
         return sendData;
@@ -363,7 +363,7 @@ function grnFromData(data){
 }
 
 function saveGrn(grnItems) {
-    var sendData = grnFromData({action: "sendData", itemArray: grnItems});
+    var sendData = grnFormData({action: "sendData", itemArray: grnItems});
     data = request_handler({ url: getDefaultGateway() + "main/" + "grns", method: "POST", data: JSON.stringify(sendData) });
     if (data.status) {
         body = data.body
@@ -376,7 +376,7 @@ function saveGrn(grnItems) {
 
 function editGrn(grnItems) {
     var id = $('input[name="docId"]').val();
-    var sendData = grnFromData({action: "sendData", itemArray: grnItems});
+    var sendData = grnFormData({action: "sendData", itemArray: grnItems});
     data = request_handler({ url: getDefaultGateway() + "main/" + "grns/" + id, method: "PUT", data: JSON.stringify(sendData) });
     if (data.status) {
         body = data.body

@@ -54,6 +54,7 @@ func requestHandler() {
 	router.HandleFunc("/loginPage", loginPage)
 	router.HandleFunc("/billingFormPage", billingFormPage)
 	router.HandleFunc("/grnFormPage", grnFormPage)
+	router.HandleFunc("/reportPage", reportPage)
 	router.HandleFunc("/logout", logout)
 	router.HandleFunc("/login", login).Methods("POST")
 	router.PathPrefix("/").Handler(http.FileServer(rice.MustFindBox("static_files").HTTPBox()))

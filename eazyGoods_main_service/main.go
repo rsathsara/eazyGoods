@@ -36,30 +36,36 @@ func requestHandler() {
 
 	router.HandleFunc("/", defaultFunction)
 	// Billing
-	router.HandleFunc("/api/bills", getBills).Methods("GET")
-	router.HandleFunc("/api/bills/{id}", getBill).Methods("GET")
-	router.HandleFunc("/api/bills", createBill).Methods("POST")
-	router.HandleFunc("/api/bills/{id}", updateBill).Methods("PUT")
+	router.HandleFunc("/api/bills", getBills).Methods("GET")        // Done
+	router.HandleFunc("/api/bills/{id}", getBill).Methods("GET")    // Done
+	router.HandleFunc("/api/bills", createBill).Methods("POST")     // Done
+	router.HandleFunc("/api/bills/{id}", updateBill).Methods("PUT") // Done
 	// GRN
-	router.HandleFunc("/api/grns", getGrns).Methods("GET")
-	router.HandleFunc("/api/grns/{id}", getGrn).Methods("GET")
-	router.HandleFunc("/api/grns", createGrn).Methods("POST")
-	router.HandleFunc("/api/grns/{id}", updateGrn).Methods("PUT")
+	router.HandleFunc("/api/grns", getGrns).Methods("GET")        // Done
+	router.HandleFunc("/api/grns/{id}", getGrn).Methods("GET")    // Done
+	router.HandleFunc("/api/grns", createGrn).Methods("POST")     // Done
+	router.HandleFunc("/api/grns/{id}", updateGrn).Methods("PUT") // Done
 	// User
 	router.HandleFunc("/api/users", getUsers).Methods("GET")
 	router.HandleFunc("/api/users/{id}", getUser).Methods("GET")
 	// Items
-	router.HandleFunc("/api/items", getItems).Methods("GET")
-	router.HandleFunc("/api/items/{id}", getItem).Methods("GET")
+	router.HandleFunc("/api/items", getItems).Methods("GET")     // Done
+	router.HandleFunc("/api/items/{id}", getItem).Methods("GET") // Done
 	router.HandleFunc("/api/items", createItem).Methods("POST")
 	router.HandleFunc("/api/items/{id}", updateItem).Methods("PUT")
 	// Customers
-	router.HandleFunc("/api/customers", getCustomers).Methods("GET")
+	router.HandleFunc("/api/customers", getCustomers).Methods("GET") // Done
 	router.HandleFunc("/api/customers/{id}", getCustomer).Methods("GET")
 	router.HandleFunc("/api/customers", createCustomer).Methods("POST")
 	router.HandleFunc("/api/customers/{id}", updateCustomer).Methods("PUT")
+	// Suppliers
+	router.HandleFunc("/api/suppliers", getSuppliers).Methods("GET") // Done
+	router.HandleFunc("/api/suppliers/{id}", getSupplier).Methods("GET")
+	router.HandleFunc("/api/suppliers", createSupplier).Methods("POST")
+	router.HandleFunc("/api/suppliers/{id}", updateSupplier).Methods("PUT")
 	// Other
-	router.HandleFunc("/api/newNumbers/{docType}", getNewNumber).Methods("GET")
+	router.HandleFunc("/api/newNumbers/{docType}", getNewNumber).Methods("GET")    // Done
+	router.HandleFunc("/api/generateReport/{id}", reportGenerator).Methods("POST") // Done
 
 	port := os.Getenv("HTTP_PLATFORM_PORT")
 	if port == "" {
