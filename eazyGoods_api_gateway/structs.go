@@ -38,13 +38,7 @@ type ResponseMsg struct {
 
 // SessionDetails Struct
 type SessionDetails struct {
-	ID       int    `json:"id"`
+	ID       string `json:"id"`
 	Username string `json:"username"`
 	Name     string `json:"name"`
-}
-
-// ReportList Struct
-type ReportList struct {
-	ID          int    `json:"id"`
-	Description string `json:"description"`
 }

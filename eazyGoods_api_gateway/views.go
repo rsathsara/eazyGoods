@@ -19,7 +19,6 @@ func loginPage(w http.ResponseWriter, r *http.Request) {
 }
 
 func homePage(w http.ResponseWriter, r *http.Request) {
-	session, _ := store.Get(r, "cookie-name")
 	if sessionResponse := sessionCheck(w, r); !sessionResponse {
 		redirectToLoginPage(w, r)
 	}
@@ -27,22 +26,14 @@ func homePage(w http.ResponseWriter, r *http.Request) {
 	t, _ := box.String("main.html")
 	tmplMessage, _ := template.New("message").Parse(t)
 
-	var sessionDetails = SessionDetails{}
-	sessionDetails.Username = fmt.Sprintf("%v", session.Values["username"])
-	sessionDetails.ID = session.Values["userId"].(int)
-	sessionDetails.Name = fmt.Sprintf("%v", session.Values["name"])
-	// sessionDetails := sessionDetails(w, r)
+	session, _ := store.Get(r, "cookie-name")
+	var sessionDetails = SessionDetails{
+		ID:       fmt.Sprintf("%v", session.Values["userId"]),
+		Username: fmt.Sprintf("%v", session.Values["username"]),
+		Name:     fmt.Sprintf("%v", session.Values["name"]),
+	}
 	tmplMessage.Execute(w, sessionDetails)
 }
-
-// func sessionDetails(w http.ResponseWriter, r *http.Request) SessionDetails {
-// 	session, _ := store.Get(r, "cookie-name")
-// 	var sessionDetails = SessionDetails{}
-// 	sessionDetails.Username = fmt.Sprintf("%v", session.Values["username"])
-// 	sessionDetails.ID = session.Values["userId"].(int)
-// 	sessionDetails.Name = fmt.Sprintf("%v", session.Values["name"])
-// 	return sessionDetails
-// }
 
 func billingFormPage(w http.ResponseWriter, r *http.Request) {
 	if sessionResponse := sessionCheck(w, r); !sessionResponse {
@@ -64,6 +55,16 @@ func grnFormPage(w http.ResponseWriter, r *http.Request) {
 	tmplMessage.Execute(w, nil)
 }
 
+func itemFormPage(w http.ResponseWriter, r *http.Request) {
+	if sessionResponse := sessionCheck(w, r); !sessionResponse {
+		redirectToLoginPage(w, r)
+	}
+	box, _ := rice.FindBox("static_files/templates")
+	t, _ := box.String("itemForm.html")
+	tmplMessage, _ := template.New("message").Parse(t)
+	tmplMessage.Execute(w, nil)
+}
+
 func reportPage(w http.ResponseWriter, r *http.Request) {
 	if sessionResponse := sessionCheck(w, r); !sessionResponse {
 		redirectToLoginPage(w, r)
@@ -71,12 +72,7 @@ func reportPage(w http.ResponseWriter, r *http.Request) {
 	box, _ := rice.FindBox("static_files/templates")
 	t, _ := box.String("reportPage.html")
 	tmplMessage, _ := template.New("message").Parse(t)
-	reportList := []ReportList{
-		{ID: 1, Description: "GRN List"},
-		{ID: 2, Description: "Invoice List"},
-		{ID: 3, Description: "Stock Balance Report"},
-	}
-	tmplMessage.Execute(w, reportList)
+	tmplMessage.Execute(w, nil)
 }
 
 func redirectToLoginPage(w http.ResponseWriter, r *http.Request) {

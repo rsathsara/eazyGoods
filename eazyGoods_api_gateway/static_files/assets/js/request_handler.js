@@ -34,6 +34,7 @@ $(".viewChangePswd").click(function () { $("#pageContentLoader").load("/changePa
 $(".viewGrnForm").click(function () { $("#pageContentLoader").load("/grnFormPage") });
 $(".viewBillingForm").click(function () { $("#pageContentLoader").load("/billingFormPage") });
 $(".viewReportForm").click(function () { $("#pageContentLoader").load("/reportPage") });
+$(".viewItemForm").click(function () { $("#pageContentLoader").load("/itemFormPage") });
 
 
 

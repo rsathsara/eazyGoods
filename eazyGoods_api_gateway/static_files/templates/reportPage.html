@@ -22,14 +22,10 @@
                 <div class="card">
                     <div class="card-header" style="padding: 0.5rem 1.25rem;">
                         <div class="row">
-                            <div class="col-md-4 formRowInput">
+                            <div class="col-md-3 formRowInput">
                                 <div class="form-group">
                                     <label for="report">Select Report</label>
-                                    <select name="report" class="form-control" id="report" required>
-                                        <option value="">&nbsp;</option>
-                                        {{range .}}
-                                        <option value="{{.ID}}">{{.Description}}</option>
-                                        {{end}}
+                                    <select name="report" class="form-control" id="report">
 
                                     </select>
                                 </div>
@@ -48,21 +44,45 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-md-5 formRowInput">
-                                
+                            <div class="col-md-3 formRowInput">
+                                <div class="form-group">
+                                    <label for="filterOption">Filter Options</label>
+                                    <select name="filterOption" class="form-control" id="filterOption" readonly>
+                                        <option selected disabled hidden style='display: none' value=''></option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-md-3 formRowInput">
+                                <div class="form-group">
+                                    <label for="filterBy">Filter By</label>
+                                    <select name="filterBy" class="form-control" id="filterBy" readonly>
+                                        <option selected disabled hidden style='display: none' value=''></option>
+                                    </select>
+                                </div>
                             </div>
                             <input type="hidden" value="" name="startDate">
                             <input type="hidden" value="" name="endDate">
                         </div>
                         <div class="row">
-                            <div class="col-md-12 formRowInput">
-                                <div style="float: right;">
+                            <div class="col-md-12 formRowInput" style="padding-bottom: 0px;padding-top: 0px;padding-left: 10px;padding-right: 10px;">
+                                <div style="float: left;">
                                     <button type="button" class="btn btn-primary" id="generateReport"
-                                        style="padding: 3px 15px;font-size: 1rem;">
+                                        style="padding: 7px 13px;font-size: 1rem;">
                                         <i class="fas fa-search"></i>
                                         <span class="hide-on-small-screen">
                                             Generate
                                         </span></button>
+                                </div>
+                                <div style="float: right;">
+                                    <button type="button" id="printButton"
+                                        class="btn btn-sm allButtons"><i style="font-size: 20px;"
+                                            class="fas fa-print"></i></button>
+                                    <button type="button" id="exelButton"
+                                        class="btn btn-sm allButtons"><i style="font-size: 20px;"
+                                            class="far fa-file-excel"></i></button>
+                                    <button type="button" id="pdfButton"
+                                        class="btn btn-sm allButtons"><i style="font-size: 20px;"
+                                            class="far fa-file-pdf"></i></button>
                                 </div>
                             </div>
                         </div>
@@ -95,14 +115,13 @@
 <!-- <script src="assets/modules/report.js"></script> -->
 <script>
     $(document).ready(function () {
+        // Daterange picker function
         var start = moment();
         var end = moment();
-
         function cb(start, end) {
             $('input[name="startDate"]').val(start.format('YYYY-MM-DD'));
             $('input[name="endDate"]').val(end.format('YYYY-MM-DD'));
         }
-
         $('#reportDateRange').daterangepicker({
             startDate: start,
             endDate: end,
@@ -110,7 +129,66 @@
             maxDate: moment(),
             locale: { format: 'YYYY/MM/DD' }
         }, cb);
-
         cb(start, end);
+
+        // Get Report List
+        getReportList();
+
+        // Generate Report
+        $("#generateReport").click(function () {
+            if ( $.fn.DataTable.isDataTable('#reportTable') ) {
+                $('#reportTable').DataTable().clear().destroy();
+                $('#reportTable').empty();
+            }
+            generateReport();
+        });
     });
+    function getReportList() {
+        data = request_handler({ url: getDefaultGateway() + "main/" + "reports", method: "GET", data: {} });
+        if (data.status) {
+            reports = data.body.reportList
+            $('select[name="report"]').find('option').remove().end();
+            for (var i = 0; i < reports.length; i++) {
+                $('select[name="report"]').append("<option value='" + reports[i].id + "'>" +
+                    reports[i].description + "</option>");
+            }
+        }
+    }
+    function generateReport(){
+        reportId = $('select[name="report"]').val();
+        sendData = {
+            startDate: $('input[name="startDate"]').val(),
+            endDate: $('input[name="endDate"]').val()
+        }
+        data = request_handler({ url: getDefaultGateway() + "main/" + "reports/" + reportId, method: "POST", data: JSON.stringify(sendData) });
+        if (data.status) {
+            var tableArray = data.body.reportOutput.list;
+            var outputColumns = data.body.reportOutput.columns;
+            var columns = [];
+            for (var i = 0; i < outputColumns.length; i++) {
+                columns.push({data : outputColumns[i], title: outputColumns[i]});
+            }
+            var rptTitle = data.body.reportTitle;
+            var rptTable = $('#reportTable').DataTable({
+                dom: "Bfrtip",
+                buttons: [
+                    {extend: "excel", title: rptTitle, className: "buttonsToHide"},
+                    {extend: "pdf", title: rptTitle, className: "buttonsToHide"},
+                    {extend: "print", title: rptTitle, className: "buttonsToHide"}
+                ],
+                data: tableArray,
+                columns: columns,
+            });
+            rptTable.buttons('.buttonsToHide').nodes().css("display", "none");
+            $('#printButton').click(function(){
+                $(".buttons-print")[0].click();//trigger the click event
+            });
+            $('#exelButton').click(function(){
+                $(".buttons-excel")[0].click();//trigger the click event
+            });
+            $('#pdfButton').click(function(){
+                $(".buttons-pdf")[0].click();//trigger the click event
+            });
+        }
+    }
 </script>

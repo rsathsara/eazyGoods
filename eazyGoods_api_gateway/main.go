@@ -49,14 +49,16 @@ func requestHandler() {
 	// router.PathPrefix("/test_api/").Handler(http.HandlerFunc(api.apiHandler))
 
 	// Route for eazyGoods_web templates
-	router.HandleFunc("/", redirectToHomePage)
+	router.HandleFunc("/", homePage)
 	router.HandleFunc("/homePage", homePage)
 	router.HandleFunc("/loginPage", loginPage)
 	router.HandleFunc("/billingFormPage", billingFormPage)
 	router.HandleFunc("/grnFormPage", grnFormPage)
+	router.HandleFunc("/itemFormPage", itemFormPage)
 	router.HandleFunc("/reportPage", reportPage)
 	router.HandleFunc("/logout", logout)
 	router.HandleFunc("/login", login).Methods("POST")
+	router.HandleFunc("/sessionDetails", getSessionDetails).Methods("GET")
 	router.PathPrefix("/").Handler(http.FileServer(rice.MustFindBox("static_files").HTTPBox()))
 
 	port := os.Getenv("HTTP_PLATFORM_PORT")

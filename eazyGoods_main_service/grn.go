@@ -146,9 +146,10 @@ func createGrn(w http.ResponseWriter, r *http.Request) {
 	if err != nil {
 		responseMsg.Status = "Error"
 		responseMsg.Msg = string(err.Error())
-	} else {
-		grnPage.ResponseMsg = responseMsg
 	}
+
+	grnPage.ResponseMsg = responseMsg
+
 	w.Header().Set("Content-Type", "application/json; charset=utf-8")
 	json.NewEncoder(w).Encode(grnPage)
 }
@@ -184,9 +185,9 @@ func updateGrn(w http.ResponseWriter, r *http.Request) {
 	if err != nil {
 		responseMsg.Status = "Error"
 		responseMsg.Msg = string(err.Error())
-	} else {
-		grnPage.ResponseMsg = responseMsg
 	}
+
+	grnPage.ResponseMsg = responseMsg
 	w.Header().Set("Content-Type", "application/json; charset=utf-8")
 	json.NewEncoder(w).Encode(grnPage)
 }

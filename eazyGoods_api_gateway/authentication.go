@@ -3,6 +3,7 @@ package main
 import (
 	"database/sql"
 	"encoding/json"
+	"fmt"
 	"net/http"
 
 	_ "github.com/go-sql-driver/mysql"
@@ -79,4 +80,15 @@ func sessionCheck(w http.ResponseWriter, r *http.Request) bool {
 		return false
 	}
 	return true
+}
+
+func getSessionDetails(w http.ResponseWriter, r *http.Request) {
+	session, _ := store.Get(r, "cookie-name")
+	var sessionDetails = SessionDetails{
+		ID:       fmt.Sprintf("%v", session.Values["userId"]),
+		Username: fmt.Sprintf("%v", session.Values["username"]),
+		Name:     fmt.Sprintf("%v", session.Values["name"]),
+	}
+	w.Header().Set("Content-Type", "application/json; charset=utf-8")
+	json.NewEncoder(w).Encode(sessionDetails)
 }

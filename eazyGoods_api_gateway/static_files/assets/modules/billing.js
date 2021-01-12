@@ -65,11 +65,11 @@ function billingForm() {
     // Add Item -> Edit Item
     $('#billItemTable').on('click', '.editItem', function () {
         var cs = $(this).closest('tr');
-        billItems = addItemHandler({itemArray: billItems, action: "edit", editRow: cs});
+        billItems = addItemHandler({ itemArray: billItems, action: "edit", editRow: cs });
     });
     $('#billItemTable').on('click', '.saveEditedItem', function () {
         var cs = $(this).closest('tr');
-        billItems = addItemHandler({itemArray: billItems, action: "saveEdit", editRow: cs, editingElements: {qty: 5, price: 6, value: 7}});
+        billItems = addItemHandler({ itemArray: billItems, action: "saveEdit", editRow: cs, editingElements: { qty: 5, price: 6, value: 7 } });
         calBillValue(billItems);
     });
     $('#billItemTable').on('input', '.input-qty, .input-price', function () {
@@ -78,7 +78,7 @@ function billingForm() {
         var qty = cs.find('td:eq(5)').find('input').val();
         cs.find('td:eq(7)').text(price * qty);
     });
-    
+
 
     // Calculate bill value
     $('input[name="cash"], input[name="creditCarde"]').on('input', function () {
@@ -172,11 +172,11 @@ function billItemTable(data) {
             '</td><td style="width: 12%;">' + data[i].code +
             '</td><td>' + data[i].description +
             '</td><td style="width: 10%;">' + data[i].unitDescription +
-            '</td><td style="width: 12%;"><input name="itemQty['+ data[i].id +']" type="text" value="'+ data[i].qty +'" autocomplete="off" data-toggle="tooltip"' +
-            'data-placement="bottom" data-original-title="" class="form-control input-validation-tooltip hideOnNew input-qty" readonly>'+
-            '</td><td style="width: 12%;"><input name="itemPrice['+ data[i].id +']" type="text" value="'+ data[i].price +'" autocomplete="off" data-toggle="tooltip"' +
-            'data-placement="bottom" data-original-title="" class="form-control input-validation-tooltip hideOnNew input-price" readonly>'+
-            '</td><td style="width: 12%;">'+ data[i].value +
+            '</td><td style="width: 12%;"><input name="itemQty[' + data[i].id + ']" type="text" value="' + data[i].qty + '" autocomplete="off" data-toggle="tooltip"' +
+            'data-placement="bottom" data-original-title="" class="form-control input-validation-tooltip hideOnNew input-qty" readonly>' +
+            '</td><td style="width: 12%;"><input name="itemPrice[' + data[i].id + ']" type="text" value="' + data[i].price + '" autocomplete="off" data-toggle="tooltip"' +
+            'data-placement="bottom" data-original-title="" class="form-control input-validation-tooltip hideOnNew input-price" readonly>' +
+            '</td><td style="width: 12%;">' + data[i].value +
             '</td><td style="width: 10%;">' +
             '<a class="m-r-15 deleteItem" data-toggle="tooltip" title="Delete">' +
             '<i style="padding-left: 10px;color:#f00;" class="fas fa-trash-alt"></i></a>' +
@@ -203,6 +203,9 @@ function itemDetails(id) {
             $('input[name="itemIndex"]').val(itemDetail.id);
             $('input[name="itemCode"]').val(itemDetail.code);
             $('input[name="unitId"]').val(itemDetail.unit.id);
+            $('input[name="itemPrice"]').val(itemDetail.salePrice);
+            $('input[name="itemQty"]').val("");
+            $('input[name="itemValue"]').val("");
         } else {
             responseAlert(body.responseMsg.status, body.responseMsg.msg);
         }
@@ -238,7 +241,7 @@ function billDetail(id) {
         bill = data.body.bill[0];
         $('input[name="docNo"]').val(bill.billNo);
         $('input[name="docDate"]').val(bill.date);
-        $('select[name="billTo"]').val(bill.billToId);
+        $('select[name="billTo"]').val(bill.billToId).trigger('change');
         $('input[name="billTotal"]').val(bill.billTotal);
         $('input[name="balance"]').val(bill.billTotal);
         $('input[name="docId"]').val(bill.id);
@@ -266,7 +269,7 @@ function calBillValue(itemArray) {
 
 function addItemHandler(data) {
     var itemArray = data.itemArray;
-    var values = billFormData({action: "addItemData", itemArray: itemArray});
+    var values = billFormData({ action: "addItemData", itemArray: itemArray });
     switch (data.action) {
         case "add":
             if (itemArray == undefined || Object.keys(itemArray).length === 0) {
@@ -291,7 +294,7 @@ function addItemHandler(data) {
             row.find('input').removeAttr('readonly');
             row.find('.editItem').prop('hidden', true);
             row.find('.saveEditedItem').prop('hidden', false);
-        return itemArray;
+            return itemArray;
         case "saveEdit":
             var row = data.editRow;
             var editingElements = data.editingElements;
@@ -302,9 +305,9 @@ function addItemHandler(data) {
                 if (editingElements.hasOwnProperty(key)) {
                     var id = row.find('td:eq(0)').text();
                     var el = row.find('td:eq(' + editingElements[key] + ')').find('input');
-                    if (el.length){
+                    if (el.length) {
                         var val = row.find('td:eq(' + editingElements[key] + ')').find('input').val();
-                    } else{
+                    } else {
                         var val = row.find('td:eq(' + editingElements[key] + ')').text();
                     }
                     for (var i = 0; i < itemArray.length; i++) {
@@ -329,8 +332,8 @@ function addItemHandler(data) {
 //     "billItemPrice": { value: "", element: "", labal: "", warning: "", conditions: [{ name: "", msg: "", data: {} }] },
 // };
 
-function billFormData(data){
-    switch (data.action){
+function billFormData(data) {
+    switch (data.action) {
         case "sendData":
             var sendData = {
                 id: parseInt($('input[name="docId"]').val()),
@@ -342,7 +345,7 @@ function billFormData(data){
                 creditPaid: parseFloat($('input[name="creditCard]').val()),
                 billDetails: data.itemArray,
             }
-        return sendData;
+            return sendData;
         case "addItemData":
             var itemArray = data.itemArray;
             var values = {
@@ -356,14 +359,14 @@ function billFormData(data){
                 price: parseFloat($('input[name="itemPrice"]').val()),
                 value: parseFloat($('input[name="itemValue"]').val()),
             };
-        return values;
+            return values;
         default:
-        return [];
+            return [];
     }
 }
 
 function saveBill(billItems) {
-    var sendData = billFormData({action: "sendData", itemArray: billItems});
+    var sendData = billFormData({ action: "sendData", itemArray: billItems });
     data = request_handler({ url: getDefaultGateway() + "main/" + "bills", method: "POST", data: JSON.stringify(sendData) });
     if (data.status) {
         body = data.body
@@ -376,7 +379,7 @@ function saveBill(billItems) {
 
 function editBill(billItems) {
     var id = $('input[name="docId"]').val();
-    var sendData = billFormData({action: "sendData", itemArray: billItems});
+    var sendData = billFormData({ action: "sendData", itemArray: billItems });
     data = request_handler({ url: getDefaultGateway() + "main/" + "bills/" + id, method: "PUT", data: JSON.stringify(sendData) });
     if (data.status) {
         body = data.body
@@ -387,6 +390,6 @@ function editBill(billItems) {
     }
 }
 
-function cancelBill(){
+function cancelBill() {
 
 }

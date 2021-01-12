@@ -238,7 +238,7 @@ function grnDetail(id) {
         grn = data.body.grn[0];
         $('input[name="docNo"]').val(grn.grnNo);
         $('input[name="docDate"]').val(grn.date);
-        $('select[name="grnFrom"]').val(grn.grnFromId);
+        $('select[name="grnFrom"]').val(grn.grnFromId).trigger('change');
         $('input[name="grnTotal"]').val(grn.grnTotal);
         $('input[name="balance"]').val(grn.grnTotal);
         $('input[name="docId"]').val(grn.id);

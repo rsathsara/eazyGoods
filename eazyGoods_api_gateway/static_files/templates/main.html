@@ -1,48 +1,65 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
 	<meta http-equiv="X-UA-Compatible" content="IE=edge" />
-	<title>MaxERP - Web Portal</title>
+	<title>eazyGoods - Web</title>
 	<meta content='width=device-width, initial-scale=1.0, shrink-to-fit=no' name='viewport' />
 	<meta charset="UTF-8">
-	<link rel="icon" href="assets/img/icon.ico" type="image/x-icon"/>
+	<link rel="icon" href="assets/img/icon.ico" type="image/x-icon" />
 	<!-- <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" /> -->
-	
+
+	<!-- CSS Files -->
+	<link rel="stylesheet" href="assets/vendorCss/bootstrap.min.css">
+	<link rel="stylesheet" href="assets/vendorCss/daterangepicker.css">
+	<link rel="stylesheet" href="assets/vendorCss/atlantis.min.css">
+	<link rel="stylesheet" href="assets/vendorCss/sweetalert2.css">
+	<link rel="stylesheet" href="assets/vendorCss/datepicker.css">
+	<link rel="stylesheet" href="assets/vendorCss/jquery-ui.css">
+	<link rel="stylesheet" type="text/css" href="assets/vendorJs/datatables.net-bs4/css/dataTables.bootstrap4.min.css">
+	<link rel="stylesheet" type="text/css" href="assets/vendorJs/datatables.rowgroup/rowGroup.dataTables.min.css">
+	<link rel="stylesheet" href="assets/vendorCss/select2.min.css">
+	<link rel="stylesheet" href="assets/css/custom.css">
+
 	<!-- Fonts and icons -->
 	<script src="assets/vendorJs/jquery.3.2.1.min.js"></script>
 	<script src="assets/vendorJs/jquery-ui.js"></script>
 	<script src="assets/vendorJs/webfont.min.js"></script>
 	<script src="assets/vendorJs/bootstrap-datepicker.js"></script>
+	<script src="assets/vendorJs/bootstrap.min.js"></script>
+	<script src="assets/vendorJs/popper.min.js"></script>
+	<script src="assets/vendorJs/datatables.min.js"></script>
+	<!-- datatable buttons for Print,PDF,Exel ...  -->
+	<script type="text/javascript" src="assets/vendorJs/datatables.net-buttons/js/buttons.html5.min.js"></script>
+	<script type="text/javascript" src="assets/vendorJs/datatables.net-buttons/js/buttons.print.min.js"></script>
+	<script type="text/javascript" src="assets/vendorJs/datatables.net-buttons/js/dataTables.buttons.min.js"></script>
+	<script type="text/javascript" src="assets/vendorJs/datatables.net-buttons/js/buttons.flash.min.js"></script>
+	<script type="text/javascript" src="assets/vendorJs/pdfmake/pdfmake.min.js"></script>
+	<script type="text/javascript" src="assets/vendorJs/pdfmake/vfs_fonts.js"></script>
+	<script type="text/javascript" src="assets/vendorJs/jszip/jszip.min.js"></script>
+	<script type="text/javascript" src="assets/vendorJs/datatables.rowgroup/dataTables.rowGroup.min.js"></script>
 	<script>
 		WebFont.load({
-			custom: {"families":["Flaticon", "Font Awesome 5 Solid", "Font Awesome 5 Regular", "Font Awesome 5 Brands", "simple-line-icons"], urls: ['assets/vendorCss/fonts.min.css']},
-			active: function() {
+			custom: { "families": ["Flaticon", "Font Awesome 5 Solid", "Font Awesome 5 Regular", "Font Awesome 5 Brands", "simple-line-icons"], urls: ['assets/vendorCss/fonts.min.css'] },
+			active: function () {
 				sessionStorage.fonts = true;
 			}
 		});
-		
+
 	</script>
-	
-	<!-- CSS Files -->
-	<link rel="stylesheet" href="assets/vendorCss/daterangepicker.css">
-	<link rel="stylesheet" href="assets/vendorCss/bootstrap.min.css">
-	<link rel="stylesheet" href="assets/vendorCss/atlantis.min.css">
-	<link rel="stylesheet" href="assets/vendorCss/sweetalert2.css">
-	<link rel="stylesheet" href="assets/vendorCss/datepicker.css">
-	<link rel="stylesheet" href="assets/vendorCss/jquery-ui.css">
-	<link rel="stylesheet" href="assets/vendorCss/select2.min.css">
-	<link rel="stylesheet" href="assets/css/custom.css">
 </head>
+
 <body>
 	<div class="wrapper">
 		<div class="main-header">
 			<!-- Logo Header -->
 			<div class="logo-header" data-background-color="blue">
-				
+
 				<a href="" class="logo">
 					<!--<img hidden src="assets/../../img/03.svg" alt="navbar brand" class="navbar-brand">-->
 				</a>
-				<button class="navbar-toggler sidenav-toggler ml-auto" type="button" data-toggle="collapse" data-target="collapse" aria-expanded="false" aria-label="Toggle navigation">
+				<button class="navbar-toggler sidenav-toggler ml-auto" type="button" data-toggle="collapse"
+					data-target="collapse" aria-expanded="false" aria-label="Toggle navigation">
 					<span class="navbar-toggler-icon">
 						<i class="icon-menu"></i>
 					</span>
@@ -54,12 +71,12 @@
 					</button>
 				</div>
 			</div>
-			
+
 			<!-- End Logo Header -->
 
 			<!-- Navbar Header -->
 			<nav class="navbar navbar-header navbar-expand-lg" data-background-color="blue2">
-				
+
 				<div class="container-fluid">
 					<!-- <div class="collapse" id="search-nav">
 						<form class="navbar-left navbar-form nav-search mr-md-3">
@@ -75,25 +92,28 @@
 					</div> -->
 					<ul class="navbar-nav topbar-nav ml-md-auto align-items-center">
 						<li hidden class="nav-item toggle-nav-search hidden-caret">
-							<a class="nav-link" data-toggle="collapse" href="#" role="button" aria-expanded="false" aria-controls="search-nav">
+							<a class="nav-link" data-toggle="collapse" href="#" role="button" aria-expanded="false"
+								aria-controls="search-nav">
 								<i class="fa fa-search"></i>
 							</a>
 						</li>
 						<li class="nav-item dropdown hidden-caret">
-							<a class="nav-link dropdown-toggle" href="#" id="notifDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+							<a class="nav-link dropdown-toggle" href="#" id="notifDropdown" role="button"
+								data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
 								<i class="fa fa-bell"></i>
-								
+
 							</a>
-							
+
 						</li>
 						<li class="nav-item dropdown hidden-caret">
 							<a class="nav-link" data-toggle="dropdown" href="#" aria-expanded="false">
 								<i class="fas fa-layer-group"></i>
 							</a>
-							
+
 						</li>
 						<li class="nav-item dropdown hidden-caret">
-							<a class="dropdown-toggle profile-pic" data-toggle="dropdown" href="#" aria-expanded="false">
+							<a class="dropdown-toggle profile-pic" data-toggle="dropdown" href="#"
+								aria-expanded="false">
 								<div class="avatar-sm">
 									<img src="assets/img/images.png" alt="..." class="avatar-img rounded-circle">
 								</div>
@@ -102,16 +122,18 @@
 								<div class="dropdown-user-scroll scrollbar-outer">
 									<li>
 										<div class="user-box">
-											<div class="avatar-lg"><img src="assets/img/images.png" alt="image profile" class="avatar-img rounded"></div>
+											<div class="avatar-lg"><img src="assets/img/images.png" alt="image profile"
+													class="avatar-img rounded"></div>
 											<div class="u-text">
 												<h4>{{.Name}}</h4>
-												<a href="#" class="btn btn-xs btn-secondary btn-sm" class="viewProfile">View Profile</a>
+												<a href="#" class="btn btn-xs btn-secondary btn-sm"
+													class="viewProfile">View Profile</a>
 											</div>
 										</div>
 									</li>
 									<li>
 										<div class="dropdown-divider"></div>
-										
+
 										<a class="dropdown-item viewChangePswd" href="#">Change Password</a>
 										<div class="dropdown-divider"></div>
 										<a class="dropdown-item" href="/logout">Logout</a>
@@ -126,7 +148,7 @@
 		</div>
 
 		<!-- Sidebar -->
-		<div class="sidebar sidebar-style-2">			
+		<div class="sidebar sidebar-style-2">
 			<div class="sidebar-wrapper scrollbar scrollbar-inner">
 				<div class="sidebar-content">
 					<div class="user">
@@ -160,11 +182,17 @@
 						</div>
 					</div>
 					<ul class="nav nav-primary">
-						
+
 						<li class="nav-item active">
 							<a href="" id="navHome">
 								<i class="fas fa-home"></i>
 								<p>Home</p>
+							</a>
+						</li>
+						<li class="nav-item">
+							<a href="#" class="viewItemForm">
+								<i class="fas fa-boxes"></i>
+								<p>Item Master</p>
 							</a>
 						</li>
 						<li class="nav-item">
@@ -185,15 +213,15 @@
 								<p>Report</p>
 							</a>
 						</li>
-						
+
 					</ul>
 				</div>
 			</div>
 		</div>
 		<!-- End Sidebar -->
-		
+
 		<!-- Main-->
-		<div class="main-panel" id="pageContentLoader">		
+		<div class="main-panel" id="pageContentLoader">
 			<div class="content">
 				<div class="panel-header bg-primary-gradient">
 					<div class="page-inner py-5">
@@ -211,17 +239,15 @@
 				<div class="container-fluid">
 					<div class="copyright ml-auto">
 						<span>Copyright © Max-A Solutions 2020</span>
-					</div>				
+					</div>
 				</div>
 			</footer>
 		</div>
 		<!-- Main End-->
-		
+
 	</div>
-	
+
 	<!--   Core JS Files   -->
-	<script src="assets/vendorJs/popper.min.js"></script>
-	<script src="assets/vendorJs/bootstrap.min.js"></script>
 	<script src="assets/vendorJs/moment.js"></script>
 	<script src="assets/vendorJs/daterangepicker.js"></script>
 
@@ -241,9 +267,6 @@
 	<!-- Chart Circle -->
 	<script src="assets/vendorJs/circles.min.js"></script>
 
-	<!-- Datatables -->
-	<script src="assets/vendorJs/datatables.min.js"></script>
-
 	<!-- Bootstrap Notify -->
 	<script src="assets/vendorJs/bootstrap-notify.min.js"></script>
 
@@ -255,20 +278,21 @@
 
 	<!-- Select 2 -->
 	<script src="assets/vendorJs/select2.min.js"></script>
-	
+
 	<!-- Custom JS -->
 	<script src="assets/js/alert_handler.js"></script>
 	<script src="assets/js/request_handler.js"></script>
 	<script src="assets/js/custom.js"></script>
 
 </body>
+
 </html>
 <script>
 	$(document).ready(function () {
-		$.fn.modal.Constructor.prototype._enforceFocus = function() {};
+		$.fn.modal.Constructor.prototype._enforceFocus = function () { };
 
 		//Click event handler for nav-items
-		$('.nav-item').on('click',function(){
+		$('.nav-item').on('click', function () {
 
 			//Remove any previous active classes
 			$('.nav-item').removeClass('active');
@@ -278,4 +302,4 @@
 		});
 
 	});
-</script>		
+</script>
