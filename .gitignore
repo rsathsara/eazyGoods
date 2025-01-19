@@ -1,4 +1,4 @@
-eazyGoods_api_gateway/rice-box.go
+/eazyGoods_api_gateway/rice-box.go
 release/
 *.env
 *.bat
