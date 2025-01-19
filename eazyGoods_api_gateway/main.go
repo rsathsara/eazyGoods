@@ -11,9 +11,18 @@ import (
 	_ "github.com/denisenkom/go-mssqldb"
 	"github.com/gorilla/mux"
 	"github.com/gorilla/sessions"
+	"github.com/joho/godotenv"
 )
 
-var connectString = "sqlserver://developer:max@123@149.28.138.109?database=MaxPOS_EazyGoods"
+var _ = godotenv.Load(".env")
+
+var HOST_NAME = os.Getenv("HOST_NAME")
+var DB_NAME = os.Getenv("DB_NAME")
+var DB_USERNAME = os.Getenv("DB_USERNAME")
+var DB_PASSWORD = os.Getenv("DB_PASSWORD")
+
+var connectString = fmt.Sprintf("sqlserver://%s:%s@%s?database=%s", DB_USERNAME, DB_PASSWORD, HOST_NAME, DB_NAME)
+
 var dbServer = "mssql"
 var err error
 var db *sql.DB
