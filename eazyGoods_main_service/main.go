@@ -10,7 +10,10 @@ import (
 	_ "github.com/denisenkom/go-mssqldb"
 	"github.com/gorilla/mux"
 	"github.com/gorilla/sessions"
+	"github.com/joho/godotenv"
 )
+
+var envError = godotenv.Load(".env")
 
 var connectString = "sqlserver://developer:max@123@149.28.138.109?database=MaxPOS_EazyGoods"
 var dbServer = "mssql"

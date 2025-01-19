@@ -20,7 +20,8 @@ func loginPage(w http.ResponseWriter, r *http.Request) {
 
 func homePage(w http.ResponseWriter, r *http.Request) {
 	if sessionResponse := sessionCheck(w, r); !sessionResponse {
-		redirectToLoginPage(w, r)
+		http.Redirect(w, r, "/loginPage", 302)
+		return
 	}
 	box, _ := rice.FindBox("static_files/templates")
 	t, _ := box.String("main.html")
@@ -37,7 +38,8 @@ func homePage(w http.ResponseWriter, r *http.Request) {
 
 func billingFormPage(w http.ResponseWriter, r *http.Request) {
 	if sessionResponse := sessionCheck(w, r); !sessionResponse {
-		redirectToLoginPage(w, r)
+		http.Redirect(w, r, "/loginPage", 302)
+		return
 	}
 	box, _ := rice.FindBox("static_files/templates")
 	t, _ := box.String("billingForm.html")
@@ -47,7 +49,8 @@ func billingFormPage(w http.ResponseWriter, r *http.Request) {
 
 func grnFormPage(w http.ResponseWriter, r *http.Request) {
 	if sessionResponse := sessionCheck(w, r); !sessionResponse {
-		redirectToLoginPage(w, r)
+		http.Redirect(w, r, "/loginPage", 302)
+		return
 	}
 	box, _ := rice.FindBox("static_files/templates")
 	t, _ := box.String("grnForm.html")
@@ -57,7 +60,8 @@ func grnFormPage(w http.ResponseWriter, r *http.Request) {
 
 func itemFormPage(w http.ResponseWriter, r *http.Request) {
 	if sessionResponse := sessionCheck(w, r); !sessionResponse {
-		redirectToLoginPage(w, r)
+		http.Redirect(w, r, "/loginPage", 302)
+		return
 	}
 	box, _ := rice.FindBox("static_files/templates")
 	t, _ := box.String("itemForm.html")
@@ -67,7 +71,8 @@ func itemFormPage(w http.ResponseWriter, r *http.Request) {
 
 func reportPage(w http.ResponseWriter, r *http.Request) {
 	if sessionResponse := sessionCheck(w, r); !sessionResponse {
-		redirectToLoginPage(w, r)
+		http.Redirect(w, r, "/loginPage", 302)
+		return
 	}
 	box, _ := rice.FindBox("static_files/templates")
 	t, _ := box.String("reportPage.html")
